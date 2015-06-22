@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'LocationPlayback_Example', :exclusive => true do
   pod "LocationPlayback", :path => "../"
+  
 end
 
 target 'LocationPlayback_Tests', :exclusive => true do
