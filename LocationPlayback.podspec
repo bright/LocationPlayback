@@ -12,10 +12,7 @@ Pod::Spec.new do |s|
   s.version          = "0.1.0"
   s.summary          = "A short description of LocationPlayback."
   s.description      = <<-DESC
-                       An optional longer description of LocationPlayback
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
+                       LocationPlayback should help you with recording and playback location of your device. We are using that lib in Bright Inventions as it helps a lot with testing the location based apps.
                        DESC
   s.homepage         = "https://github.com/<GITHUB_USERNAME>/LocationPlayback"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
