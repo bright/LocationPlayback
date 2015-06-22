@@ -2,7 +2,7 @@
   "name": "LocationPlayback",
   "version": "0.1.0",
   "summary": "A short description of LocationPlayback.",
-  "description": "                       An optional longer description of LocationPlayback\n\n                       * Markdown format.\n                       * Don't worry about the indent, we strip it!\n",
+  "description": "                       LocationPlayback should help you with recording and playback location of your device. We are using that lib in Bright Inventions as it helps a lot with testing the location based apps.\n",
   "homepage": "https://github.com/<GITHUB_USERNAME>/LocationPlayback",
   "license": "MIT",
   "authors": {

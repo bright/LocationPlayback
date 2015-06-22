@@ -6,26 +6,33 @@
 //  Copyright (c) 2014 Daniel Makurat. All rights reserved.
 //
 
+#import <LocationPlayback/TripRecorder.h>
+#import <LocationPlayback/TripPlayback.h>
 #import "BIViewController.h"
 
 @interface BIViewController ()
 
 @end
 
-@implementation BIViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    [[TripRecorder alloc] init];
-	// Do any additional setup after loading the view, typically from a nib.
+@implementation BIViewController {
+    TripRecorder *_tripRecorder;
+    TripPlayback *_tripPlayback;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    _tripRecorder = [[TripRecorder alloc] init];
+    [_tripRecorder start];
+
+    [self performSelector:@selector(stopRecordingTrip) withObject:nil afterDelay:15];
+    // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)stopRecordingTrip {
+    Trip *trip = [_tripRecorder stop];
+    _tripPlayback = [[TripPlayback alloc] initWithTrip:trip];
+    [_tripPlayback play];
 }
 
 @end

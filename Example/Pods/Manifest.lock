@@ -22,7 +22,7 @@ SPEC CHECKSUMS:
   Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
   Expecta+Snapshots: ca15bfb57e7a0f78f86c7699c2c54ffacfa4ad2a
   FBSnapshotTestCase: 3dc3899168747a0319c5278f5b3445c13a6532dd
-  LocationPlayback: 9c42e3280b0ffefa8995cbfbe18081929b674592
+  LocationPlayback: 164cf0f06a902e792c83bd480acab3555f1d11fb
   Specta: 9cec98310dca411f7c7ffd6943552b501622abfe
 
 COCOAPODS: 0.37.2
