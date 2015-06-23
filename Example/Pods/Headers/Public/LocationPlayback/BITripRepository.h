@@ -1,0 +1,1 @@
+../../../../../Pod/Classes/BITripRepository.h

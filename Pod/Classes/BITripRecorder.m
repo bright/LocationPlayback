@@ -1,11 +1,11 @@
-#import "TripRecorder.h"
-#import "Trip.h"
-#import "TripEntry.h"
+#import "BITripRecorder.h"
+#import "BITrip.h"
+#import "BITripEntry.h"
 
 @import CoreLocation;
 
 
-@implementation TripRecorder {
+@implementation BITripRecorder {
     CLLocationManager *_locationManager;
     NSMutableArray *_tripEntries;
     NSDate *_startDate;
@@ -26,16 +26,16 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     if(_recording){
         NSLog(@"location updated!! %@", newLocation);
-        TripEntry *entry = [[TripEntry alloc] initWithLocation: newLocation];
+        BITripEntry *entry = [[BITripEntry alloc] initWithLocation: newLocation];
         NSLog(@"new trip entry created!! %@", entry);
         [_tripEntries addObject: entry];
     }
 }
 
-- (Trip *)stop {
+- (BITrip *)stop {
     _recording = NO;
     [_locationManager stopUpdatingLocation];
-    return [[Trip alloc] initWithStartDate:_startDate entries:_tripEntries];
+    return [[BITrip alloc] initWithStartDate:_startDate entries:_tripEntries name:[[NSUUID UUID] UUIDString]];
 }
 
 @end

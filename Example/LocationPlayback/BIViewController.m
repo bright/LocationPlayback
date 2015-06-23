@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Daniel Makurat. All rights reserved.
 //
 
-#import <LocationPlayback/TripRecorder.h>
-#import <LocationPlayback/TripPlayback.h>
+#import "BITripRecorder.h"
+#import "BITripPlayback.h"
 #import "BIViewController.h"
 
 @interface BIViewController ()
@@ -15,14 +15,14 @@
 @end
 
 @implementation BIViewController {
-    TripRecorder *_tripRecorder;
-    TripPlayback *_tripPlayback;
+    BITripRecorder *_tripRecorder;
+    BITripPlayback *_tripPlayback;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    _tripRecorder = [[TripRecorder alloc] init];
+    _tripRecorder = [[BITripRecorder alloc] init];
     [_tripRecorder start];
 
     [self performSelector:@selector(stopRecordingTrip) withObject:nil afterDelay:15];
@@ -30,8 +30,8 @@
 }
 
 - (void)stopRecordingTrip {
-    Trip *trip = [_tripRecorder stop];
-    _tripPlayback = [[TripPlayback alloc] initWithTrip:trip];
+    BITrip *trip = [_tripRecorder stop];
+    _tripPlayback = [[BITripPlayback alloc] initWithTrip:trip];
     [_tripPlayback play];
 }
 

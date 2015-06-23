@@ -1,19 +1,19 @@
-#import "TripPlayback.h"
-#import "Trip.h"
-#import "TripEntry.h"
+#import "BITripPlayback.h"
+#import "BITrip.h"
+#import "BITripEntry.h"
 
 
-@implementation TripPlayback {
-    Trip *_trip;
+@implementation BITripPlayback {
+    BITrip *_trip;
     NSTimer *_timer;
     NSDate *_lastDate;
     NSDate *_startDate;
     NSArray *_tripEntries;
     NSEnumerator *_entriesEnumerator;
-    TripEntry *_entryToPlay;
+    BITripEntry *_entryToPlay;
 }
 
-- (instancetype)initWithTrip:(Trip *)trip {
+- (instancetype)initWithTrip:(BITrip *)trip {
     self = [super init];
     if (self) {
         _trip = trip;
@@ -24,7 +24,7 @@
     return self;
 }
 
-+ (instancetype)playbackWithTrip:(Trip *)trip {
++ (instancetype)playbackWithTrip:(BITrip *)trip {
     return [[self alloc] initWithTrip:trip];
 }
 
@@ -42,7 +42,7 @@
         NSLog(@"play: entry: %@", [_entryToPlay debugDescription]);
         _entryToPlay = nil;
     }
-    TripEntry* entry = [_entriesEnumerator nextObject];
+    BITripEntry * entry = [_entriesEnumerator nextObject];
     if(entry == nil){
         NSLog(@"trip recording ended!");
     } else {
