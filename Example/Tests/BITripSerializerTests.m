@@ -21,7 +21,8 @@ SpecBegin(BITripSerializerTests)
 
             NSString *serializedTrip = [serializer serialize: trip];
             BITrip *deSerializedTrip = [serializer deserialize:serializedTrip];
-            expect([deSerializedTrip isEqualToTrip:trip]).to.beTruthy;
+            BOOL areEqual = [deSerializedTrip isEqualToTrip:trip];
+            expect(areEqual).to.equal(YES);
         });
     });
 
