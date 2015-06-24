@@ -8,6 +8,8 @@
 
 - (NSArray *)getEntries;
 
+- (instancetype)initFromDictionary:(NSDictionary *)dictionary;
+
 -(NSDate *) getStartDate;
 
 - (BOOL)isEqual:(id)other;
@@ -18,4 +20,5 @@
 
 -(NSString *) getName;
 
+- (NSDictionary *)toDictionary;
 @end

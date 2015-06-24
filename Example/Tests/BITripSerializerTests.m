@@ -7,9 +7,12 @@
 SpecBegin(BITripSerializerTests)
 
     describe(@"serialize a trip, deserialize and check if match", ^{
-        it(@"can do maths", ^{
+        __block BITrip* trip = nil;
+        __block BITrip* deSerializedTrip = nil;
+
+        beforeEach(^{
             BITripSerializer *serializer = [[BITripSerializer alloc] init];
-            CLLocation *location = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(50, 50)
+            CLLocation *location = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(51, 50)
                                                                  altitude:30
                                                        horizontalAccuracy:3
                                                          verticalAccuracy:3
@@ -17,13 +20,17 @@ SpecBegin(BITripSerializerTests)
                                                                     speed:30
                                                                 timestamp:[NSDate date]];
             BITripEntry *entry = [[BITripEntry alloc] initWithLocation: location];
-            BITrip *trip = [[BITrip alloc] initWithStartDate:[NSDate date] entries:@[entry] name:@"test trip name"];
+            trip = [[BITrip alloc] initWithStartDate:[NSDate date] entries:@[entry] name:@"test trip name"];
 
             NSString *serializedTrip = [serializer serialize: trip];
-            BITrip *deSerializedTrip = [serializer deserialize:serializedTrip];
+            deSerializedTrip = [serializer deserialize:serializedTrip];
+        });
+
+        it(@"trip is equal to deserialized trip", ^{
             BOOL areEqual = [deSerializedTrip isEqualToTrip:trip];
             expect(areEqual).to.equal(YES);
         });
+
     });
 
 SpecEnd

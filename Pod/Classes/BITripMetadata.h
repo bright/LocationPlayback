@@ -10,7 +10,6 @@
 
 + (instancetype)metadataWithName:(NSString *)name;
 
-
 - (BOOL)isEqual:(id)other;
 
 - (BOOL)isEqualToMetadata:(BITripMetadata *)metadata;
@@ -24,7 +23,6 @@
 - (void)encodeWithCoder:(NSCoder *)coder;
 
 + (instancetype)metadataWithUrl:(NSURL *)url key:(NSString *)key name:(NSString *)name;
-
 
 + (instancetype)metadataWithKey:(NSString *)key name:(NSString *)name;
 

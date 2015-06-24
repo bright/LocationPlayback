@@ -1,7 +1,7 @@
 #import "BITrip.h"
 #import "BITripEntry.h"
 #import "BITripMetadata.h"
-
+#import "NSString+Date.h"
 @implementation BITrip {
     NSArray *_entries;
     NSDate *_startDate;
@@ -50,7 +50,7 @@
             if (!areEqual) return NO;
         }
     }
-    if (_startDate != trip->_startDate && ![_startDate isEqualToDate:trip->_startDate])
+    if (_startDate != trip->_startDate && !((NSInteger)[_startDate timeIntervalSince1970] == (NSInteger)[trip->_startDate timeIntervalSince1970]))
         return NO;
     if (_name != trip->_name && ![_name isEqualToString:trip->_name])
         return NO;
@@ -66,6 +66,32 @@
 
 - (NSString *)getName {
     return _name;
+}
+
+-(NSDictionary *) toDictionary {
+    NSMutableArray *entriesAsDict = [NSMutableArray new];
+    for(BITripEntry *entry in _entries){
+        NSDictionary *entryAsDict = [entry toDictionary];
+        [entriesAsDict addObject: entryAsDict];
+    }
+    return @{
+            @"startDate": [NSString stringDateFromDate:_startDate],
+            @"name": _name,
+            @"entries": entriesAsDict
+    };
+}
+
+- (instancetype)initFromDictionary:(NSDictionary *)dictionary {
+    NSString* name = dictionary[@"name"];
+    NSDate* startDate = [dictionary[@"startDate"] toDateFromStringDate];
+    NSArray*entriesJsons = dictionary[@"entries"];
+
+    NSMutableArray*entriesList = [NSMutableArray new];
+    for(NSDictionary *entryDict in entriesJsons){
+        BITripEntry* tripEntry = [[BITripEntry alloc] initFromDictionary: entryDict];
+        [entriesList addObject:tripEntry];
+    }
+    return [[BITrip alloc] initWithStartDate:startDate entries:entriesList name:name];
 }
 
 

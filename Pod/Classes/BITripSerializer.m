@@ -7,11 +7,19 @@
 @implementation BITripSerializer {}
 
 - (NSString *)serialize:(BITrip *)trip {
-    return nil;
+    NSError *writeError = nil;
+    NSDictionary *tripAsDict = [trip toDictionary];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tripAsDict options:nil error:&writeError];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return jsonString;
 }
 
 -(BITrip *) deserialize:(NSString *) serializedTrip {
-    return [[BITrip alloc] initWithStartDate:[NSDate date] entries:@[] name:@"some name"];
+    NSData *data = [serializedTrip dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *readError = nil;
+    NSDictionary *jsonObj = [NSJSONSerialization JSONObjectWithData:data options:nil error: &readError];
+    BITrip *trip = [[BITrip alloc] initFromDictionary: jsonObj];
+    return trip;
 }
 
 

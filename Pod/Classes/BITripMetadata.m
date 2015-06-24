@@ -20,6 +20,7 @@
     self = [super init];
     if (self) {
         _name = name;
+        _key = [[NSUUID UUID] UUIDString];
     }
 
     return self;

@@ -24,6 +24,7 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		C5892DD603372EA843C5499B /* BITripSerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C589234C6E3109B363129401 /* BITripSerializerTests.m */; };
+		C5892E32A88B24D11CB208DF /* BITripLocalRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C5892E898F276FACDDAE9B90 /* BITripLocalRepositoryTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BD7D6905DEC05C48C79455FE /* Pods-LocationPlayback_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationPlayback_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocationPlayback_Example/Pods-LocationPlayback_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C589234C6E3109B363129401 /* BITripSerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BITripSerializerTests.m; sourceTree = "<group>"; };
+		C5892E898F276FACDDAE9B90 /* BITripLocalRepositoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BITripLocalRepositoryTests.m; sourceTree = "<group>"; };
 		D38B3ABD90AD1F9DC7494FFD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		EC3F1FE6FAB9ADA07EDC685D /* Pods-LocationPlayback_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationPlayback_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocationPlayback_Tests/Pods-LocationPlayback_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -172,6 +174,7 @@
 				6003F5BB195388D20070C39A /* Tests.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				C589234C6E3109B363129401 /* BITripSerializerTests.m */,
+				C5892E898F276FACDDAE9B90 /* BITripLocalRepositoryTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 			files = (
 				6003F5BC195388D20070C39A /* Tests.m in Sources */,
 				C5892DD603372EA843C5499B /* BITripSerializerTests.m in Sources */,
+				C5892E32A88B24D11CB208DF /* BITripLocalRepositoryTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
