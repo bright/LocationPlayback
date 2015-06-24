@@ -8,6 +8,8 @@
 
 -(NSDate *) getTimestamp;
 
+- (CLLocationCoordinate2D)getCoordinate;
+
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary;
 
 - (BOOL)isEqual:(id)other;

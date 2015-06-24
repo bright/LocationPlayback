@@ -30,8 +30,10 @@
 
 
 -(void) play {
-    
-    if([_tripEntries count] == 0) return;
+    [self.delegate tripPlaybackStarted: self];
+    if([_tripEntries count] == 0) {
+        [self.delegate tripPlaybackEnded:self];
+    }
     _entriesEnumerator = [_tripEntries objectEnumerator];
     
     [self _play];
@@ -40,15 +42,21 @@
 - (void)_play {
     if(_entryToPlay != nil){
         NSLog(@"play: entry: %@", [_entryToPlay debugDescription]);
+        [self.delegate tripPlayback: self playEntry: _entryToPlay];
         _entryToPlay = nil;
     }
     BITripEntry * entry = [_entriesEnumerator nextObject];
     if(entry == nil){
         NSLog(@"trip recording ended!");
+        [self.delegate tripPlaybackEnded: self];
     } else {
         _entryToPlay = entry;
         NSTimeInterval timeInterval = [[entry getTimestamp] timeIntervalSinceDate:_lastDate];
-        NSAssert(timeInterval > 0, @"time interval should be greater than 0");
+        if(timeInterval <= 0){
+//            NSAssert(timeInterval > 0, @"time interval should be greater than 0, but was: %@", @(timeInterval));
+            timeInterval = 0.1;
+        }
+
         [self performSelector:@selector(_play) withObject:nil afterDelay:timeInterval];
         _lastDate = [entry getTimestamp];
         [_timer fire];

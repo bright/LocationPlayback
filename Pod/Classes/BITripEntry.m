@@ -29,6 +29,10 @@
     return _timestamp;
 }
 
+-(CLLocationCoordinate2D) getCoordinate {
+    return _coordinate2D;
+}
+
 - (NSString *)debugDescription {
     return [NSString stringWithFormat:@"trip entry with speed: %@", @(self.speed)];
 }
