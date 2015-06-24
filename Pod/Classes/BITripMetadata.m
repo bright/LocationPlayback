@@ -4,7 +4,7 @@
 @implementation BITripMetadata {
     NSString *_name;
     NSString *_key;
-    NSURL* _url;
+    NSURL *_url;
 }
 
 - (instancetype)initWithKey:(NSString *)key name:(NSString *)name {
@@ -80,8 +80,30 @@
     return hash;
 }
 
--(NSString *)getKey {
+- (NSString *)getKey {
     return _key;
+}
+
+- (NSDictionary *)toDictionary {
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    dict[@"name"] = _name;
+    dict[@"key"] = _key;
+    if(_url){
+        dict[@"url"] = [_url absoluteString];
+    }
+    return dict;
+}
+
+- (instancetype)initFromDictionary:(NSDictionary *)dictionary {
+    NSString *name = dictionary[@"name"];
+    NSString *key = dictionary[@"key"];
+    NSURL* url = nil;
+    NSString *urlFromDict = dictionary[@"url"];
+    if(urlFromDict){
+        url = [[NSURL alloc] initWithString:urlFromDict];
+    }
+    return [[BITripMetadata alloc] initWithUrl:url key:key name:name];
+
 }
 
 - (id)initWithCoder:(NSCoder *)coder {

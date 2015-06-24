@@ -2,8 +2,8 @@
 
 #import <LocationPlayback/BITrip.h>
 #import <LocationPlayback/BITripEntry.h>
-#import <LocationPlayback/BITripSerializer.h>
 #import <LocationPlayback/BITripLocalRepository.h>
+#import <LocationPlayback/BITripMetadata.h>
 
 SpecBegin(BITripLocalRepositoryTests)
 
@@ -42,7 +42,7 @@ SpecBegin(BITripLocalRepositoryTests)
             BITripEntry *entry2_2 = [[BITripEntry alloc] initWithLocation:location3];
             trip2 = [[BITrip alloc] initWithStartDate:[NSDate date] entries:@[entry2_1, entry2_2] name:@"test trip 2 name"];
 
-            sut = [[BITripLocalRepository alloc] initWithSeed:@"test_seed"];
+            sut = [[BITripLocalRepository alloc] initWithSeed:[[NSUUID UUID] UUIDString]];
         });
 
         it(@"stored and loaded 1 trip are equal", ^{
@@ -68,6 +68,33 @@ SpecBegin(BITripLocalRepositoryTests)
 
             expect([loadedTrip isEqualToTrip: trip]).to.equal(YES);
             expect([loadedTrip2 isEqualToTrip: trip2]).to.equal(YES);
+        });
+
+        it(@"store trip and check if loadAllTripsMetadata returns metadata for stored trip", ^{
+            NSError *error = nil;
+            BITripMetadata *tripMetadata = [sut storeTrip:trip error:&error];
+
+            NSArray *allTripsMetadata = [sut loadAllTripsMetadata];
+
+            expect(error).to.beNil;
+            expect([allTripsMetadata count]).to.equal(1);
+            expect([allTripsMetadata[0] isEqualToMetadata:tripMetadata]).to.equal(YES);
+        });
+
+        it(@"store 2 trips and check if loadAllTripsMetadata returns metadata for all stored trips", ^{
+            NSError *error = nil;
+            NSError *error2 = nil;
+            BITripMetadata *tripMetadata = [sut storeTrip:trip error:&error];
+            BITripMetadata *tripMetadata2 = [sut storeTrip:trip2 error:&error2];
+
+            NSArray *allTripsMetadata = [sut loadAllTripsMetadata];
+
+            expect(error).to.beNil;
+            expect(error2).to.beNil;
+
+            expect([allTripsMetadata count]).to.equal(2);
+            expect([allTripsMetadata containsObject:tripMetadata]).to.equal(YES);
+            expect([allTripsMetadata containsObject:tripMetadata2]).to.equal(YES);
         });
 
     });

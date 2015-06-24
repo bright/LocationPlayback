@@ -18,6 +18,10 @@
 
 - (NSString *)getKey;
 
+- (NSDictionary *)toDictionary;
+
+- (instancetype)initFromDictionary:(NSDictionary *)dictionary;
+
 - (id)initWithCoder:(NSCoder *)coder;
 
 - (void)encodeWithCoder:(NSCoder *)coder;
