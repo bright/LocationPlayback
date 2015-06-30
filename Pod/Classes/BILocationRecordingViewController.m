@@ -1,9 +1,8 @@
 #import "BILocationRecordingViewController.h"
 #import "BITripRecordingPreview.h"
 #import "BITrip.h"
-#import "BITripRecorder.h"
-#import "BITripSummaryView.h"
 #import "ALView+PureLayout.h"
+#import "BIStyles.h"
 
 #define LEFT_RIGHT_INSET 20
 #define BUTTON_HEIGHT 75
@@ -26,25 +25,26 @@
     [super loadView];
     self.view.backgroundColor = [UIColor whiteColor];
 
-    _startRecordingButton = [self createButtonWithName:@"Start new ride"];
+    _startRecordingButton = [BIStyles createButtonWithName:@"Start new ride"];
     [self.view addSubview:_startRecordingButton];
     [_startRecordingButton addTarget:self action:@selector(_startRecording) forControlEvents:UIControlEventTouchUpInside];
 
-    _stopRecordingButton = [self createButtonWithName:@"Stop ride"];
+    _stopRecordingButton = [BIStyles createButtonWithName:@"Stop ride"];
     [self.view addSubview:_stopRecordingButton];
     [_stopRecordingButton addTarget:self action:@selector(_stopRecording) forControlEvents:UIControlEventTouchUpInside];
     _stopRecordingButton.hidden = YES;
 
-    _rideNameTextField = [self createTripNameTextField];
+    _rideNameTextField = [BIStyles createTextField];
+    _rideNameTextField.delegate = self;
     [self.view addSubview:_rideNameTextField];
 
 
-    _saveTripButton = [self createButtonWithName:@"Save trip"];
+    _saveTripButton = [BIStyles createButtonWithName:@"Save trip"];
     [_saveTripButton addTarget:self action:@selector(saveTrip) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_saveTripButton];
     _saveTripButton.hidden = YES;
 
-    _discardTripButton = [self createButtonWithName:@"Discard Trip"];
+    _discardTripButton = [BIStyles createButtonWithName:@"Discard Trip"];
     [_discardTripButton addTarget:self action:@selector(discardTrip) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_discardTripButton];
     _discardTripButton.hidden = YES;
@@ -127,32 +127,7 @@
     return NO;
 }
 
-- (UIButton *)createButtonWithName:(NSString *)name {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [button setTitle:name forState:UIControlStateNormal];
-    button.tintColor = [UIColor blackColor];
-    button.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:223.0f/255.0f blue:190.0f/255.0f alpha:1.0];
-    button.layer.borderColor = [UIColor blackColor].CGColor;
-    button.layer.borderWidth = 1.f;
-    button.layer.cornerRadius = 10.0f;
 
-    return button;
-}
-
-- (UITextField *)createTripNameTextField {
-    UITextField *tripNameTextField = [UITextField new];
-
-    tripNameTextField.textAlignment = NSTextAlignmentCenter;
-    tripNameTextField.delegate = self;
-
-    tripNameTextField.backgroundColor = [UIColor lightGrayColor];
-    tripNameTextField.backgroundColor = [UIColor colorWithRed:253.0f/255.0f green:239.0f/255.0f blue:224.0f/255.0f alpha:1.0];
-    tripNameTextField.layer.borderColor = [UIColor blackColor].CGColor;
-    tripNameTextField.layer.borderWidth = 1.f;
-    tripNameTextField.layer.cornerRadius = 10.0f;
-
-    return tripNameTextField;
-}
 
 
 @end
