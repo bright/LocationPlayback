@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol BITripsViewControllerProtocol;
+@class BITripMetadata;
 
 @interface BITripsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) id<BITripsViewControllerProtocol> delegate;
@@ -12,4 +13,5 @@
 @end
 
 @protocol BITripsViewControllerProtocol <NSObject>
+- (void)tripsViewController:(BITripsViewController *)controller onTripSelected:(BITripMetadata *)selectedTripMetadata;
 @end

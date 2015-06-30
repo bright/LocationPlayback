@@ -26,6 +26,7 @@
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    [self.view addSubview: _tableView];
 }
 
 
@@ -45,7 +46,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"cell selected");
+    BITripMetadata* tripMetadata = _tripMetadata[(NSUInteger) indexPath.row];
+    [self.delegate tripsViewController: self onTripSelected: tripMetadata];
 }
 
 

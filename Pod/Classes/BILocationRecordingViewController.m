@@ -2,7 +2,7 @@
 #import "BITripRecordingPreview.h"
 #import "BITrip.h"
 #import "BITripRecorder.h"
-#import "BIRecordedTripSummaryView.h"
+#import "BITripSummaryView.h"
 
 
 @implementation BILocationRecordingViewController {
@@ -13,17 +13,22 @@
     BITripRecorder *_tripRecorder;
     BITripRecordingPreview *_recordingPreview;
     BITrip *_trip;
-    BIRecordedTripSummaryView *_summary;
+    BITripSummaryView *_summary;
 }
 
 - (void)loadView {
     [super loadView];
+    self.view.backgroundColor = [UIColor redColor];
     
-    _startRecordingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
+    _startRecordingButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _startRecordingButton.frame = CGRectMake(0, 100, 200, 70);
+    [_startRecordingButton setTitle:@"Start" forState:UIControlStateNormal];
     [self.view addSubview:_startRecordingButton];
     [_startRecordingButton addTarget:self action:@selector(_startRecording) forControlEvents:UIControlEventTouchUpInside];
 
-    _stopRecordingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 50)];
+    _stopRecordingButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _stopRecordingButton.frame = CGRectMake(0, 100, 200, 70);
+    [_stopRecordingButton setTitle:@"Stop" forState:UIControlStateNormal];
     [self.view addSubview:_stopRecordingButton];
     [_stopRecordingButton addTarget:self action:@selector(_stopRecording) forControlEvents:UIControlEventTouchUpInside];
     _stopRecordingButton.hidden = YES;
@@ -33,10 +38,11 @@
 - (void)_stopRecording {
     _trip = [_tripRecorder stop];
     _stopRecordingButton.hidden = YES;
+    [self.delegate recordingVC: self tripRecorded: _trip];
 
-    _summary = [[BIRecordedTripSummaryView alloc] initWithFrame:self.view.bounds trip: _trip];
-    _summary.delegate = self;
-    [self.view addSubview: _summary];
+//    _summary = [[BIRecordedTripSummaryView alloc] initWithFrame:self.view.bounds trip: _trip];
+//    _summary.delegate = self;
+//    [self.view addSubview: _summary];
 }
 
 - (void)_startRecording {
@@ -53,7 +59,7 @@
 - (void)showRecordingPreviewForRecorder:(BITripRecorder *) tripRecorder {
     _recordingPreview = [[BITripRecordingPreview alloc] initWithTripRecorder:tripRecorder];
     [self.view addSubview:_recordingPreview];
-    _recordingPreview.frame = CGRectMake(100, 0, 200, 200);
+    _recordingPreview.frame = CGRectMake(100, 200, 200, 300);
 }
 
 

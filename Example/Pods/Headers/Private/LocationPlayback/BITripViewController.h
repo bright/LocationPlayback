@@ -1,0 +1,1 @@
+../../../../../Pod/Classes/BITripViewController.h

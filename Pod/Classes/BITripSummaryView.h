@@ -4,7 +4,7 @@
 @protocol BIRecordedTripSummaryViewProtocol;
 @class BITrip;
 
-@interface BIRecordedTripSummaryView : UIView
+@interface BITripSummaryView : UILabel
 @property (nonatomic, weak) id<BIRecordedTripSummaryViewProtocol> delegate;
 - (instancetype)initWithFrame:(CGRect)rect trip:(BITrip *)trip;
 @end
