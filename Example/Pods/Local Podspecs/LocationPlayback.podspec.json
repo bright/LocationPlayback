@@ -25,6 +25,9 @@
   "dependencies": {
     "PureLayout": [
       "~> 2.0.6"
+    ],
+    "Parse": [
+      "~> 1.7.4"
     ]
   }
 }

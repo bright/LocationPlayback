@@ -6,13 +6,18 @@
 //  Copyright (c) 2014 Daniel Makurat. All rights reserved.
 //
 
+#import <LocationPlayback/BICloudTripRepository.h>
+#import <LocationPlayback/BICloudRepositoryBuilder.h>
+#import <LocationPlayback/BILocationPlayback.h>
+#import <LocationPlayback/BILocationPlaybackConfiguration.h>
 #import "BIAppDelegate.h"
 
 @implementation BIAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    BICloudRepositoryBuilder* repositoryBuilder = [[BICloudRepositoryBuilder alloc] initWithLaunchOptions:launchOptions];
+    [[[BILocationPlayback instance] getConfiguration] setTripRepositoriesBuilder: repositoryBuilder];
     return YES;
 }
 							

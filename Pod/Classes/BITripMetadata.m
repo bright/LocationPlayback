@@ -7,27 +7,13 @@
     NSURL *_url;
 }
 
-- (instancetype)initWithKey:(NSString *)key name:(NSString *)name {
-    self = [super init];
-    if (self) {
-        _key = key;
-        _name = name;
-    }
-    return self;
-}
-
 - (instancetype)initWithName:(NSString *)name {
     self = [super init];
     if (self) {
         _name = name;
         _key = [[NSUUID UUID] UUIDString];
     }
-
     return self;
-}
-
-+ (instancetype)metadataWithName:(NSString *)name {
-    return [[self alloc] initWithName:name];
 }
 
 
@@ -40,14 +26,6 @@
     }
 
     return self;
-}
-
-+ (instancetype)metadataWithUrl:(NSURL *)url key:(NSString *)key name:(NSString *)name {
-    return [[self alloc] initWithUrl:url key:key name:name];
-}
-
-+ (instancetype)metadataWithKey:(NSString *)key name:(NSString *)name {
-    return [[self alloc] initWithKey:key name:name];
 }
 
 - (BOOL)isEqual:(id)other {

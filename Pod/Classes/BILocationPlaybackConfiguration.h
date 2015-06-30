@@ -1,8 +1,12 @@
 #import <Foundation/Foundation.h>
 
 @protocol BITripRepository;
+@protocol BITripRepositoryBuilder;
 
 
 @interface BILocationPlaybackConfiguration : NSObject
-- (id <BITripRepository>)createStorageWithSeed:(NSString *)seed;
+
+- (void)setTripRepositoriesBuilder:(id <BITripRepositoryBuilder>)repositoryBuilder;
+
+- (id <BITripRepository>)createStorage;
 @end

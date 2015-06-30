@@ -1,5 +1,8 @@
 #import <UIKit/UIKit.h>
 
+#import "BICloudRepositoryBuilder.h"
+#import "BICloudTripRepository.h"
+#import "BILocalRepositoryBuilder.h"
 #import "BILocationPlayback.h"
 #import "BILocationPlaybackConfiguration.h"
 #import "BILocationPlaybackMainViewController.h"
@@ -15,6 +18,7 @@
 #import "BITripRecorder.h"
 #import "BITripRecordingPreview.h"
 #import "BITripRepository.h"
+#import "BITripRepositoryBuilder.h"
 #import "BITripSerializer.h"
 #import "BITripSummaryView.h"
 #import "BITripsViewController.h"

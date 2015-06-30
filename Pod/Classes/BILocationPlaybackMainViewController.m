@@ -52,7 +52,7 @@
 }
 
 - (void)_selectTripToPlay {
-    id <BITripRepository> storage = [[[BILocationPlayback instance] getConfiguration] createStorageWithSeed:@"example_test_seed"];
+    id <BITripRepository> storage = [[[BILocationPlayback instance] getConfiguration] createStorage];
     NSArray *tripsMetadata = [storage loadAllTripsMetadata];
     BITripsViewController *tripsViewController = [[BITripsViewController alloc] initWithTripMetadata:tripsMetadata];
     tripsViewController.delegate = self;
@@ -68,7 +68,7 @@
 }
 
 - (id <BITripRepository>)createStorage {
-     return [[[BILocationPlayback instance] getConfiguration] createStorageWithSeed:@"example_test_seed"];
+     return [[[BILocationPlayback instance] getConfiguration] createStorage];
 }
 
 - (void)recordingVC:(BILocationRecordingViewController *)sender tripRecorded:(BITrip *)recordedTrip {
