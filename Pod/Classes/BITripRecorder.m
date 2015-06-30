@@ -57,17 +57,18 @@
 - (BITrip *)stop {
     _recording = NO;
     [_locationManager stopUpdatingLocation];
-    NSString *tripName = [self createTripName];
-    return [[BITrip alloc] initWithStartDate:_startDate entries:_tripEntries name:tripName];
+    NSString *storageTripName = [self createTripName];
+    return [[BITrip alloc] initWithStartDate:_startDate entries:_tripEntries name:storageTripName];
 }
 
 - (NSString *)createTripName {
     NSDate *currentDate = [NSDate new];
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    dateFormatter.dateFormat = @"dd.MM.yy hh.mm.ss";
+    dateFormatter.dateFormat = @"dd.MM.yy HH:mm:ss";
+    dateFormatter.timeStyle = NSDateFormatterFullStyle;
     NSString *currentDateString = [dateFormatter stringFromDate:currentDate];
-    NSString *tripName = [NSString stringWithFormat:@"%@ %@", tripName, currentDateString];
-    return tripName;
+    NSString *storageTripName = [NSString stringWithFormat:@"%@ %@", _tripName, currentDateString];
+    return storageTripName;
 }
 
 @end

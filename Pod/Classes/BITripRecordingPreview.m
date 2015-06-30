@@ -11,9 +11,9 @@
 }
 
 - (instancetype)initWithTripRecorder:(BITripRecorder *) tripRecorder {
-    self = [super initWithFrame:CGRectMake(0, 0, 200, 200)];
+//    self = [super initWithFrame:CGRectMake(0, 0, 200, 200)];
+    self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor redColor];
         _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 200, 150)];
         _tripRecorder = tripRecorder;
         _tripRecorder.delegate = self;
