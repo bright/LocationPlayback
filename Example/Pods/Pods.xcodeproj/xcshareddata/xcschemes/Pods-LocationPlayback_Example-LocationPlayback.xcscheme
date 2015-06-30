@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "51E91D1E685D4EBB59E89777"
+               BlueprintIdentifier = "DA6087C27B52B4A25AF74F06"
                BuildableName = "LocationPlayback.framework"
                BlueprintName = "Pods-LocationPlayback_Example-LocationPlayback"
                ReferencedContainer = "container:Pods.xcodeproj">

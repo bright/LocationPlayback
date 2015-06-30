@@ -28,6 +28,8 @@
 
 + (instancetype)metadataWithUrl:(NSURL *)url key:(NSString *)key name:(NSString *)name;
 
+- (NSString *)getName;
+
 + (instancetype)metadataWithKey:(NSString *)key name:(NSString *)name;
 
 @end

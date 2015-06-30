@@ -1,5 +1,8 @@
 #import <UIKit/UIKit.h>
 
+#import "BILocationPlaybackMainViewController.h"
+#import "BILocationRecordingViewController.h"
+#import "BIRecordedTripSummaryView.h"
 #import "BITrip.h"
 #import "BITripEntry.h"
 #import "BITripLocalRepository.h"
@@ -11,6 +14,7 @@
 #import "BITripRecordingPreview.h"
 #import "BITripRepository.h"
 #import "BITripSerializer.h"
+#import "BITripsViewController.h"
 #import "NSString+Date.h"
 
 FOUNDATION_EXPORT double LocationPlaybackVersionNumber;

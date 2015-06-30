@@ -124,4 +124,7 @@
 }
 
 
+- (NSString *)getName {
+    return _name;
+}
 @end
