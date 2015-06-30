@@ -1,6 +1,0 @@
-framework module LocationPlayback {
-  umbrella header "Pods-LocationPlayback_Example-LocationPlayback-umbrella.h"
-
-  export *
-  module * { export * }
-}

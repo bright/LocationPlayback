@@ -1,6 +1,0 @@
-framework module Parse {
-  umbrella header "Pods-LocationPlayback_Example-Parse-umbrella.h"
-
-  export *
-  module * { export * }
-}
