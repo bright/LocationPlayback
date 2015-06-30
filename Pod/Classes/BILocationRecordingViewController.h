@@ -5,7 +5,7 @@
 @protocol BILocationRecordingViewControllerProtocol;
 @class BITrip;
 
-@interface BILocationRecordingViewController : UIViewController <BIRecordedTripSummaryViewProtocol>
+@interface BILocationRecordingViewController : UIViewController <BIRecordedTripSummaryViewProtocol, UITextFieldDelegate>
 @property (nonatomic, weak) id<BILocationRecordingViewControllerProtocol> delegate;
 @end
 

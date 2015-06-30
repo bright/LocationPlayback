@@ -2,7 +2,6 @@
 #import "BILocationPlaybackMainViewController.h"
 #import "BILocationPlaybackConfiguration.h"
 
-
 @implementation BILocationPlayback {
     UIViewController *_previousVC;
     BILocationPlaybackMainViewController *_locationPlaybackMainVC;

@@ -11,7 +11,22 @@
     NSDate *_startDate;
     BOOL _recording;
     NSTimeInterval _lastLocationTimeInterval;
+    NSString *_tripName;
 }
+
+- (instancetype)initWithTripName:(NSString *)tripName {
+    self = [super init];
+    if (self) {
+        _tripName = tripName;
+    }
+
+    return self;
+}
+
++ (instancetype)recorderWithTripName:(NSString *)tripName {
+    return [[self alloc] initWithTripName:tripName];
+}
+
 
 - (void)start {
     NSLog(@"start recording trip");
@@ -42,7 +57,18 @@
 - (BITrip *)stop {
     _recording = NO;
     [_locationManager stopUpdatingLocation];
-    return [[BITrip alloc] initWithStartDate:_startDate entries:_tripEntries name:[[NSUUID UUID] UUIDString]];
+    NSString *storageTripName = [self createTripName];
+    return [[BITrip alloc] initWithStartDate:_startDate entries:_tripEntries name:storageTripName];
+}
+
+- (NSString *)createTripName {
+    NSDate *currentDate = [NSDate new];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    dateFormatter.dateFormat = @"dd.MM.yy HH:mm:ss";
+    dateFormatter.timeStyle = NSDateFormatterFullStyle;
+    NSString *currentDateString = [dateFormatter stringFromDate:currentDate];
+    NSString *storageTripName = [NSString stringWithFormat:@"%@ %@", _tripName, currentDateString];
+    return storageTripName;
 }
 
 @end

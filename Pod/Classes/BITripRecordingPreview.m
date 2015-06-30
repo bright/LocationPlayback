@@ -2,6 +2,7 @@
 #import "BITripRecorder.h"
 #import "BITripEntry.h"
 #import "BITrip.h"
+#import "ALView+PureLayout.h"
 
 @import MapKit;
 
@@ -11,13 +12,14 @@
 }
 
 - (instancetype)initWithTripRecorder:(BITripRecorder *) tripRecorder {
-    self = [super initWithFrame:CGRectMake(0, 0, 200, 200)];
+    self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor redColor];
-        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 200, 150)];
+        _mapView = [MKMapView new];
+
         _tripRecorder = tripRecorder;
         _tripRecorder.delegate = self;
         [self addSubview: _mapView];
+        [_mapView autoPinEdgesToSuperviewEdgesWithInsets:ALEdgeInsetsZero];
     }
 
     return self;
