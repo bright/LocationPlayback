@@ -4,6 +4,7 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 #import "NSString+Date.h"
+
 @interface BITripEntry ()
 
 @property(nonatomic) CLLocationCoordinate2D coordinate2D;
@@ -20,7 +21,7 @@
     if (self) {
         self.coordinate2D = location.coordinate;
         self.speed = (CGFloat) location.speed;
-        self.timestamp = location.timestamp;
+        self.timestamp = [NSDate date];
     }
     return self;
 }
