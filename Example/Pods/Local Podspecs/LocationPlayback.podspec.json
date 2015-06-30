@@ -21,5 +21,10 @@
     "LocationPlayback": [
       "Pod/Assets/*.png"
     ]
+  },
+  "dependencies": {
+    "PureLayout": [
+      "~> 2.0.6"
+    ]
   }
 }

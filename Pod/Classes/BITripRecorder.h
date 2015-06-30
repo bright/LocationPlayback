@@ -9,6 +9,11 @@
 
 @property (nonatomic, weak) id<BITripRecorderProtocol> delegate;
 
+- (instancetype)initWithTripName:(NSString *)tripName;
+
++ (instancetype)recorderWithTripName:(NSString *)tripName;
+
+
 - (void)start;
 
 - (BITrip *)stop;

@@ -29,6 +29,8 @@ Pod::Spec.new do |s|
     'LocationPlayback' => ['Pod/Assets/*.png']
   }
 
+  s.dependency 'PureLayout', '~> 2.0.6'
+
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
