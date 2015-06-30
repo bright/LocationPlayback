@@ -5,13 +5,13 @@
 
 @protocol BITripRepository <NSObject>
 
-- (BITripMetadata *)storeTrip:(BITrip *)tripToStore error:(NSError **)error;
+- (void)storeTrip:(BITrip *)tripToStore responseBlock:(void (^)(BITripMetadata *, NSError *))block;
 
-- (BITrip *)loadTripWithMetadata:(BITripMetadata *)tripMetadata;
+- (void)loadTripWithMetadata:(BITripMetadata *)tripMetadata responseBlock:(void (^)(BITrip *, NSError *))block;
 
 /**
 * @return objects of type `BITripMetadata`
 */
-- (NSArray *)loadAllTripsMetadata;
+- (void)loadAllTripsMetadata:(void (^)(NSArray*, NSError *))responseBlock;
 
 @end

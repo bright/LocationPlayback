@@ -1,3 +1,4 @@
+#import <CFNetwork/CFNetwork.h>
 #import "BICloudTripRepository.h"
 #import "BITripMetadata.h"
 #import "BITrip.h"
@@ -22,53 +23,63 @@
 }
 
 
-- (BITripMetadata *)storeTrip:(BITrip *)tripToStore error:(NSError **)error {
+- (void)storeTrip:(BITrip *)tripToStore responseBlock:(void (^)(BITripMetadata *, NSError *))responseBlock {
     NSString *serializedTrip = [_serializer serialize:tripToStore];
     BITripMetadata *tripMetadata = [[BITripMetadata alloc] initWithName:[tripToStore getName]];
 
     PFObject *tripObject = [PFObject objectWithClassName:@"Trip"];
     tripObject[@"serialized"] = serializedTrip;
     tripObject[@"metadataKey"] = [tripMetadata getKey];
-    [tripObject saveInBackground];
-
-    [self storeMetadata:tripMetadata];
-    return tripMetadata;
+    [tripObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(succeeded && error == nil){
+            NSString *serializedMetadata = [_metadataSerializer serialize:tripMetadata];
+            PFObject *tripMetadataPF = [PFObject objectWithClassName:@"TripMetadata"];
+            tripMetadataPF[@"serialized"] = serializedMetadata;
+            [tripMetadataPF saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if(succeeded && error == nil){
+                    responseBlock(tripMetadata, nil);
+                } else {
+                    responseBlock(nil, [[NSError alloc] initWithDomain:@"BICloudTripRepository" code:1 userInfo:nil]);
+                }
+            }];
+        } else {
+            responseBlock(nil, [[NSError alloc] initWithDomain:@"BICloudTripRepository" code:1 userInfo:nil]);
+        }
+    }];
 }
 
-- (BITrip *)loadTripWithMetadata:(BITripMetadata *)tripMetadata {
+- (void)loadTripWithMetadata:(BITripMetadata *)tripMetadata responseBlock:(void (^)(BITrip *, NSError *))block {
     PFQuery *query = [PFQuery queryWithClassName:@"Trip"];
     [query whereKey:@"metadataKey" equalTo:[tripMetadata getKey]];
-    NSError* error = nil;
-    PFObject *metadata = [query getFirstObject:&error];
-    if(metadata != nil){
-        NSString* serializedTrip = metadata[@"serialized"];
-        BITrip *deSerializedTrip = [_serializer deserialize:serializedTrip];
-        return deSerializedTrip;
-    }
-    return nil;
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *metadata, NSError *error) {
+        if(metadata != nil && error == nil){
+            NSString* serializedTrip = metadata[@"serialized"];
+            BITrip *deSerializedTrip = [_serializer deserialize:serializedTrip];
+            block(deSerializedTrip, nil);
+        } else {
+            block(nil, [[NSError alloc] initWithDomain:@"BICloudTripRepository" code:1 userInfo:nil]);
+        }
+    }];
 }
 
-- (NSArray *)loadAllTripsMetadata {
+- (void)loadAllTripsMetadata:(void (^)(NSArray*, NSError *))responseBlock {
     PFQuery *query = [PFQuery queryWithClassName:@"TripMetadata"];
     [query orderByDescending:@"createdAt"];
-    NSError *error = nil;
-    NSArray *pfObjects = [query findObjects:&error];
-    NSMutableArray *metadataArray = [NSMutableArray new];
-    for (PFObject *pfObject in pfObjects) {
-        NSString *serializedMetadata = pfObject[@"serialized"];
-        BITripMetadata *deSerializedMetadata = [_metadataSerializer deserialize:serializedMetadata];
-        if (deSerializedMetadata != nil){
-            [metadataArray addObject:deSerializedMetadata];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *pfObjects, NSError *error) {
+        if(pfObjects != nil && error == nil){
+            NSMutableArray *metadataArray = [NSMutableArray new];
+            for (PFObject *pfObject in pfObjects) {
+                NSString *serializedMetadata = pfObject[@"serialized"];
+                BITripMetadata *deSerializedMetadata = [_metadataSerializer deserialize:serializedMetadata];
+                if (deSerializedMetadata != nil){
+                    [metadataArray addObject:deSerializedMetadata];
+                }
+            }
+            responseBlock(metadataArray, nil);
+        } else {
+            responseBlock(nil, [[NSError alloc] initWithDomain:@"BICloudTripRepository" code:1 userInfo:nil]);
         }
-    }
-    return metadataArray;
-}
-
-- (void)storeMetadata:(BITripMetadata *)metadata {
-    NSString *serializedMetadata = [_metadataSerializer serialize:metadata];
-    PFObject *tripMetadata = [PFObject objectWithClassName:@"TripMetadata"];
-    tripMetadata[@"serialized"] = serializedMetadata;
-    [tripMetadata saveInBackground];
+    }];
 }
 
 @end

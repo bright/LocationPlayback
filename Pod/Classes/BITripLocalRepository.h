@@ -6,6 +6,4 @@
 
 - (instancetype)initWithSeed:(NSString *)seed;
 
-+ (instancetype)repositoryWithSeed:(NSString *)seed;
-
 @end

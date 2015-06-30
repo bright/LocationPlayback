@@ -23,12 +23,12 @@ SpecBegin(BITripLocalRepositoryTests)
             trip = [[BITrip alloc] initWithStartDate:[NSDate date] entries:@[entry] name:@"test trip name"];
 
             CLLocation *location2 = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(54, 53)
-                                                                 altitude:30
-                                                       horizontalAccuracy:2
-                                                         verticalAccuracy:3
-                                                                   course:1
-                                                                    speed:34
-                                                                timestamp:[NSDate date]];
+                                                                  altitude:30
+                                                        horizontalAccuracy:2
+                                                          verticalAccuracy:3
+                                                                    course:1
+                                                                     speed:34
+                                                                 timestamp:[NSDate date]];
 
             CLLocation *location3 = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(54, 53)
                                                                   altitude:30
@@ -46,55 +46,111 @@ SpecBegin(BITripLocalRepositoryTests)
         });
 
         it(@"stored and loaded 1 trip are equal", ^{
-            NSError *error = nil;
-            BITripMetadata *tripMetadata = [sut storeTrip:trip error:&error];
-            BITrip *loadedTrip = [sut loadTripWithMetadata: tripMetadata];
-
-            expect(error).to.beNil;
-            expect([loadedTrip isEqualToTrip: trip]).to.equal(YES);
+            __block BITripMetadata *tripMetadata = nil;
+            waitUntil(^(DoneCallback done) {
+                [sut storeTrip:trip responseBlock:^(BITripMetadata *metadata, NSError *error) {
+                    expect(error).to.beNil;
+                    tripMetadata = metadata;
+                    done();
+                }];
+            });
+            waitUntil(^(DoneCallback done) {
+                [sut loadTripWithMetadata:tripMetadata responseBlock:^(BITrip *loadedTrip, NSError *error) {
+                    expect(error).to.beNil;
+                    expect([loadedTrip isEqualToTrip:trip]).to.equal(YES);
+                    done();
+                }];
+            });
         });
 
         it(@"stored and loaded 2 trip are equal", ^{
-            NSError *error = nil;
-            NSError *error2 = nil;
-            BITripMetadata *tripMetadata = [sut storeTrip:trip error:&error];
-            BITripMetadata *tripMetadata2 = [sut storeTrip:trip2 error:&error2];
+            __block BITripMetadata *tripMetadata = nil;
+            waitUntil(^(DoneCallback done) {
+                [sut storeTrip:trip responseBlock:^(BITripMetadata *metadata, NSError *error) {
+                    expect(error).to.beNil;
+                    tripMetadata = metadata;
+                    done();
+                }];
+            });
+            __block BITripMetadata *tripMetadata2 = nil;
+            waitUntil(^(DoneCallback done) {
+                [sut storeTrip:trip2 responseBlock:^(BITripMetadata *metadata, NSError *error) {
+                    expect(error).to.beNil;
+                    tripMetadata2 = metadata;
+                    done();
+                }];
+            });
+            __block BITrip *loadedTrip = nil;
+            waitUntil(^(DoneCallback done) {
+                [sut loadTripWithMetadata:tripMetadata responseBlock:^(BITrip *trip, NSError *error) {
+                    expect(error).to.beNil;
+                    loadedTrip = trip;
+                    done();
+                }];
+            });
 
-            BITrip *loadedTrip = [sut loadTripWithMetadata: tripMetadata];
-            BITrip *loadedTrip2 = [sut loadTripWithMetadata: tripMetadata2];
 
-            expect(error).to.beNil;
-            expect(error2).to.beNil;
+            __block BITrip *loadedTrip2 = nil;
+            waitUntil(^(DoneCallback done) {
+                [sut loadTripWithMetadata:tripMetadata2 responseBlock:^(BITrip *trip, NSError *error) {
+                    expect(error).to.beNil;
+                    loadedTrip2 = trip;
+                    done();
+                }];
+            });
 
-            expect([loadedTrip isEqualToTrip: trip]).to.equal(YES);
-            expect([loadedTrip2 isEqualToTrip: trip2]).to.equal(YES);
+            expect([loadedTrip isEqualToTrip:trip]).to.equal(YES);
+            expect([loadedTrip2 isEqualToTrip:trip2]).to.equal(YES);
         });
 
         it(@"store trip and check if loadAllTripsMetadata returns metadata for stored trip", ^{
             NSError *error = nil;
-            BITripMetadata *tripMetadata = [sut storeTrip:trip error:&error];
-
-            NSArray *allTripsMetadata = [sut loadAllTripsMetadata];
-
-            expect(error).to.beNil;
-            expect([allTripsMetadata count]).to.equal(1);
-            expect([allTripsMetadata[0] isEqualToMetadata:tripMetadata]).to.equal(YES);
+            __block BITripMetadata *tripMetadata = nil;
+            waitUntil(^(DoneCallback done) {
+                [sut storeTrip:trip responseBlock:^(BITripMetadata *metadata, NSError *error) {
+                    expect(error).to.beNil;
+                    tripMetadata = metadata;
+                    done();
+                }];
+            });
+            waitUntil(^(DoneCallback done) {
+                [sut loadAllTripsMetadata:^(NSArray *allTripsMetadata, NSError *error) {
+                    expect(error).to.beNil;
+                    expect([allTripsMetadata count]).to.equal(1);
+                    expect([allTripsMetadata[0] isEqualToMetadata:tripMetadata]).to.equal(YES);
+                    done();
+                }];
+            });
         });
 
         it(@"store 2 trips and check if loadAllTripsMetadata returns metadata for all stored trips", ^{
             NSError *error = nil;
             NSError *error2 = nil;
-            BITripMetadata *tripMetadata = [sut storeTrip:trip error:&error];
-            BITripMetadata *tripMetadata2 = [sut storeTrip:trip2 error:&error2];
-
-            NSArray *allTripsMetadata = [sut loadAllTripsMetadata];
-
-            expect(error).to.beNil;
-            expect(error2).to.beNil;
-
-            expect([allTripsMetadata count]).to.equal(2);
-            expect([allTripsMetadata containsObject:tripMetadata]).to.equal(YES);
-            expect([allTripsMetadata containsObject:tripMetadata2]).to.equal(YES);
+            __block BITripMetadata *tripMetadata = nil;
+            __block BITripMetadata *tripMetadata2 = nil;
+            waitUntil(^(DoneCallback done) {
+                [sut storeTrip:trip responseBlock:^(BITripMetadata *metadata, NSError *error) {
+                    expect(error).to.beNil;
+                    tripMetadata = metadata;
+                    done();
+                }];
+            });
+            waitUntil(^(DoneCallback done) {
+                [sut storeTrip:trip2 responseBlock:^(BITripMetadata *metadata, NSError *error) {
+                    expect(error).to.beNil;
+                    tripMetadata2 = metadata;
+                    done();
+                }];
+            });
+            waitUntil(^(DoneCallback done) {
+                [sut loadAllTripsMetadata:^(NSArray *allTripsMetadata, NSError *error) {
+                    expect(error).to.beNil;
+                    expect([allTripsMetadata count]).to.equal(2);
+                    expect([allTripsMetadata containsObject:tripMetadata]).to.equal(YES);
+                    expect([allTripsMetadata containsObject:tripMetadata2]).to.equal(YES);
+                    done();
+                }];
+            });
         });
 
     });

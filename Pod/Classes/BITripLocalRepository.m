@@ -21,17 +21,13 @@
     return self;
 }
 
-+ (instancetype)repositoryWithSeed:(NSString *)seed {
-    return [[self alloc] initWithSeed:seed];
-}
-
-- (BITripMetadata *)storeTrip:(BITrip *)tripToStore error:(NSError **)error {
+- (void)storeTrip:(BITrip *)tripToStore responseBlock:(void (^)(BITripMetadata *, NSError *))responseBlock {
     NSString *serializedTrip = [_serializer serialize:tripToStore];
     BITripMetadata *tripMetadata = [[BITripMetadata alloc] initWithName:[tripToStore getName]];
     NSString *fileKey = [self generateKeyForTripWithMetadata:tripMetadata];
     [[NSUserDefaults standardUserDefaults] setObject:serializedTrip forKey:fileKey];
     [self storeMetadata:tripMetadata];
-    return tripMetadata;
+    responseBlock(tripMetadata, nil);
 }
 
 - (NSString *)generateKeyForMetadata:(BITripMetadata *)metadata {
@@ -53,14 +49,14 @@
     return [NSString stringWithFormat:@"BITripLocalRepository_%@_%@", _seed, [metadata getKey]];
 }
 
-- (BITrip *)loadTripWithMetadata:(BITripMetadata *)tripMetadata {
+- (void)loadTripWithMetadata:(BITripMetadata *)tripMetadata responseBlock:(void (^)(BITrip *, NSError *))block {
     NSString *fileKey = [self generateKeyForTripWithMetadata:tripMetadata];
     NSString *synchronizedTrip = [[NSUserDefaults standardUserDefaults] objectForKey:fileKey];
     BITrip *deSerializedTrip = [_serializer deserialize:synchronizedTrip];
-    return deSerializedTrip;
+    block(deSerializedTrip, nil);
 }
 
-- (NSArray *)loadAllTripsMetadata {
+- (void)loadAllTripsMetadata:(void (^)(NSArray *, NSError *))responseBlock {
     NSMutableArray *metadataArray = [NSMutableArray new];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *metadataPrefix = [self generateKeyPrefixForMetadata];
@@ -71,7 +67,7 @@
             [metadataArray addObject:deSerializedMetadata];
         }
     }
-    return metadataArray;
+    responseBlock(metadataArray, nil);
 }
 
 @end

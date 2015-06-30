@@ -8,4 +8,5 @@
 
 @interface BILocationPlaybackMainViewController : UIViewController <BITripsViewControllerProtocol, BILocationPlaybackPreviewViewControllerProtocol, BILocationRecordingViewControllerProtocol, BITripViewControllerProtocol>
 
+- (void)showTripsViewController:(NSArray *)array;
 @end

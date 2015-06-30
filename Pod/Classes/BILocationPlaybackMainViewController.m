@@ -1,3 +1,4 @@
+#import <CFNetwork/CFNetwork.h>
 #import "BILocationPlaybackMainViewController.h"
 #import "BITripsViewController.h"
 #import "BILocationPlayback.h"
@@ -53,7 +54,16 @@
 
 - (void)_selectTripToPlay {
     id <BITripRepository> storage = [[[BILocationPlayback instance] getConfiguration] createStorage];
-    NSArray *tripsMetadata = [storage loadAllTripsMetadata];
+    __weak BILocationPlaybackMainViewController *weakSelf = self;
+    [storage loadAllTripsMetadata:^(NSArray *tripsMetadata, NSError *error) {
+        BILocationPlaybackMainViewController *strongSelf = weakSelf;
+        if(error == nil){
+            [strongSelf showTripsViewController: tripsMetadata];
+        }
+    }];
+}
+
+- (void)showTripsViewController:(NSArray *)tripsMetadata {
     BITripsViewController *tripsViewController = [[BITripsViewController alloc] initWithTripMetadata:tripsMetadata];
     tripsViewController.delegate = self;
     [self.navigationController pushViewController:tripsViewController animated:YES];
@@ -61,8 +71,20 @@
 
 - (void)tripsViewController:(BITripsViewController *)controller onTripSelected:(BITripMetadata *)selectedTripMetadata {
     id <BITripRepository> storage = [self createStorage];
-    BITrip *selectedTrip = [storage loadTripWithMetadata: selectedTripMetadata];
-    BITripViewController *tripViewController = [[BITripViewController alloc] initWithTrip:selectedTrip];
+    __weak BILocationPlaybackMainViewController *weakSelf = self;
+    [storage loadTripWithMetadata: selectedTripMetadata responseBlock:^(BITrip* trip, NSError * error){
+        BILocationPlaybackMainViewController *strongSelf = weakSelf;
+        if(trip && error == nil){
+            [strongSelf showTripViewControllerForTrip: trip];
+        } else {
+            NSLog(@"something went wrong");
+        }
+    }];
+    
+}
+
+- (void)showTripViewControllerForTrip:(BITrip *)trip {
+    BITripViewController *tripViewController = [[BITripViewController alloc] initWithTrip:trip];
     tripViewController.delegate = self;
     [self.navigationController pushViewController:tripViewController animated:YES];
 }
@@ -72,11 +94,11 @@
 }
 
 - (void)recordingVC:(BILocationRecordingViewController *)sender tripRecorded:(BITrip *)recordedTrip {
-    NSError* error;
-    [[self createStorage] storeTrip:recordedTrip error:&error];
-    if(error != nil){
-        NSLog(@"Trip not recorder, trip recording error!: %@", [error description]);
-    }
+    [[self createStorage] storeTrip:recordedTrip responseBlock:^(BITripMetadata *metadata, NSError *error) {
+        if(error != nil){
+            NSLog(@"Trip not recorder, trip recording error!: %@", [error description]);
+        }
+    }];
 }
 
 - (void)tripViewController:(BITripViewController *)sender playbackRequestedOnTrip:(BITrip *)trip {
