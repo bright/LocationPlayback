@@ -19,7 +19,6 @@
     BITripRecorder *_tripRecorder;
     BITripRecordingPreview *_recordingPreview;
     BITrip *_trip;
-//    BITripSummaryView *_summary;
     UITextField *_rideNameTextField;
 }
 
@@ -82,9 +81,6 @@
     _stopRecordingButton.hidden = YES;
     _saveTripButton.hidden = NO;
     _discardTripButton.hidden = NO;
-//    _summary = [[BIRecordedTripSummaryView alloc] initWithFrame:self.view.bounds trip: _trip];
-//    _summary.delegate = self;
-//    [self.view addSubview: _summary];
 }
 
 - (void)_startRecording {
@@ -119,9 +115,10 @@
 - (void)showRecordingPreviewForRecorder:(BITripRecorder *) tripRecorder {
     _recordingPreview = [[BITripRecordingPreview alloc] initWithTripRecorder:tripRecorder];
     [self.view addSubview:_recordingPreview];
-    [_recordingPreview autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_stopRecordingButton withOffset:100];
+    [_recordingPreview autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_stopRecordingButton withOffset:50];
     [_recordingPreview autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view];
     [_recordingPreview autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view];
+    [_recordingPreview autoSetDimension:ALDimensionHeight toSize:200];
 }
 
 
