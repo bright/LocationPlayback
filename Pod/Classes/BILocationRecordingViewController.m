@@ -36,6 +36,7 @@
 
     _rideNameTextField = [BIStyles createTextField];
     _rideNameTextField.delegate = self;
+    _rideNameTextField.placeholder = @"Trip name";
     [self.view addSubview:_rideNameTextField];
 
 
