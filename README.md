@@ -20,6 +20,10 @@ it, simply add the following line to your Podfile:
 pod "LocationPlayback"
 ```
 
+## Running Example project
+
+First make sure you have ruby and bundler gem installed. Then go to `Example` directory. In Example directory please execute `bundle install` and if success please execute `pod install`. Now you can open working project file `open Example/LocationPlayback.xcworkspace`.
+
 ## Author
 
 Daniel Makurat, daniel.makurat@gmail.com
