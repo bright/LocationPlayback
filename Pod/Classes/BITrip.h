@@ -4,7 +4,7 @@
 
 @interface BITrip : NSObject
 
-- (instancetype)initWithStartDate:(NSDate *)startDate entries:(NSArray *)tripEntries name:(NSString *)name;
+- (instancetype)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate entries:(NSArray *)tripEntries name:(NSString *)name;
 
 - (NSArray *)getEntries;
 
@@ -21,4 +21,6 @@
 -(NSString *) getName;
 
 - (NSDictionary *)toDictionary;
+
+- (NSDate *)getEndDate;
 @end

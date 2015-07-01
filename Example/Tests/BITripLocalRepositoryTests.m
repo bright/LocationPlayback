@@ -20,7 +20,7 @@ SpecBegin(BITripLocalRepositoryTests)
                                                                     speed:30
                                                                 timestamp:[NSDate date]];
             BITripEntry *entry = [[BITripEntry alloc] initWithLocation:location];
-            trip = [[BITrip alloc] initWithStartDate:[NSDate date] entries:@[entry] name:@"test trip name"];
+            trip = [[BITrip alloc] initWithStartDate:[NSDate date] endDate:nil entries:@[entry] name:@"test trip name"];
 
             CLLocation *location2 = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(54, 53)
                                                                   altitude:30
@@ -40,7 +40,7 @@ SpecBegin(BITripLocalRepositoryTests)
 
             BITripEntry *entry2_1 = [[BITripEntry alloc] initWithLocation:location2];
             BITripEntry *entry2_2 = [[BITripEntry alloc] initWithLocation:location3];
-            trip2 = [[BITrip alloc] initWithStartDate:[NSDate date] entries:@[entry2_1, entry2_2] name:@"test trip 2 name"];
+            trip2 = [[BITrip alloc] initWithStartDate:[NSDate date] endDate:nil entries:@[entry2_1, entry2_2] name:@"test trip 2 name"];
 
             sut = [[BITripLocalRepository alloc] initWithSeed:[[NSUUID UUID] UUIDString]];
         });

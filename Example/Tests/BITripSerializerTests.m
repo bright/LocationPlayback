@@ -20,7 +20,7 @@ SpecBegin(BITripSerializerTests)
                                                                     speed:30
                                                                 timestamp:[NSDate date]];
             BITripEntry *entry = [[BITripEntry alloc] initWithLocation: location];
-            trip = [[BITrip alloc] initWithStartDate:[NSDate date] entries:@[entry] name:@"test trip name"];
+            trip = [[BITrip alloc] initWithStartDate:[NSDate date] endDate:nil entries:@[entry] name:@"test trip name"];
 
             NSString *serializedTrip = [serializer serialize: trip];
             deSerializedTrip = [serializer deserialize:serializedTrip];

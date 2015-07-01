@@ -5,13 +5,15 @@
 @implementation BITrip {
     NSArray *_entries;
     NSDate *_startDate;
+    NSDate *_endDate;
     NSString *_name;
 }
 
-- (instancetype)initWithStartDate:(NSDate *)startDate entries:(NSArray *)tripEntries name:(NSString *)name {
+- (instancetype)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate entries:(NSArray *)tripEntries name:(NSString *)name {
     self = [super init];
     if (self) {
         _startDate = startDate;
+        _endDate = endDate;
         _entries = tripEntries;
         _name = name;
     }
@@ -24,6 +26,10 @@
 
 - (NSDate *)getStartDate {
     return _startDate;
+}
+
+- (NSDate *)getEndDate {
+    return _endDate;
 }
 
 - (BOOL)isEqual:(id)other {
@@ -81,6 +87,7 @@
     };
 }
 
+
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary {
     NSString* name = dictionary[@"name"];
     NSDate* startDate = [dictionary[@"startDate"] toDateFromStringDate];
@@ -91,8 +98,6 @@
         BITripEntry* tripEntry = [[BITripEntry alloc] initFromDictionary: entryDict];
         [entriesList addObject:tripEntry];
     }
-    return [[BITrip alloc] initWithStartDate:startDate entries:entriesList name:name];
+    return [[BITrip alloc] initWithStartDate:startDate endDate:nil entries:entriesList name:name];
 }
-
-
 @end
