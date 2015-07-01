@@ -1,6 +1,7 @@
 #import "BITripPlaybackPreview.h"
 #import "BITripPlayback.h"
 #import "BITripEntry.h"
+#import "ALView+PureLayout.h"
 
 @import MapKit;
 
@@ -12,11 +13,12 @@
 - (instancetype)initWithTripPlayback:(__weak BITripPlayback *)tripPlayback {
     self = [super init];
     if (self) {
+        _mapView = [MKMapView new];
+
         _tripPlayback = tripPlayback;
-        self.backgroundColor = [UIColor redColor];
-        _mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 200, 150)];
         _tripPlayback.delegate = self;
         [self addSubview: _mapView];
+        [_mapView autoPinEdgesToSuperviewEdgesWithInsets:ALEdgeInsetsZero];
     }
 
     return self;
@@ -40,5 +42,8 @@
 
 }
 
+- (void)clearAnnotations {
+    [_mapView removeAnnotations:_mapView.annotations];
+}
 
 @end

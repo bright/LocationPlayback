@@ -10,6 +10,8 @@
 
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary;
 
+- (CGFloat)averageSpeed;
+
 -(NSDate *) getStartDate;
 
 - (BOOL)isEqual:(id)other;

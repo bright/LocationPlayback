@@ -114,11 +114,12 @@
 
 - (void)showRecordingPreviewForRecorder:(BITripRecorder *) tripRecorder {
     _recordingPreview = [[BITripRecordingPreview alloc] initWithTripRecorder:tripRecorder];
+    [_recordingPreview clearAnnotations];
     [self.view addSubview:_recordingPreview];
     [_recordingPreview autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_stopRecordingButton withOffset:50];
-    [_recordingPreview autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view];
-    [_recordingPreview autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view];
-    [_recordingPreview autoSetDimension:ALDimensionHeight toSize:200];
+    [_recordingPreview autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:VERTICAL_SPACING];
+    [_recordingPreview autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [_recordingPreview autoPinEdgeToSuperviewEdge:ALEdgeRight];
 }
 
 

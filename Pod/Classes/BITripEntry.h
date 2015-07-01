@@ -10,6 +10,8 @@
 
 - (CLLocationCoordinate2D)getCoordinate;
 
+- (CGFloat)speed;
+
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary;
 
 - (BOOL)isEqual:(id)other;

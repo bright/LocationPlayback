@@ -2,6 +2,7 @@
 #import "BITripEntry.h"
 #import "BITripMetadata.h"
 #import "NSString+Date.h"
+
 @implementation BITrip {
     NSArray *_entries;
     NSDate *_startDate;
@@ -56,7 +57,7 @@
             if (!areEqual) return NO;
         }
     }
-    if (_startDate != trip->_startDate && !((NSInteger)[_startDate timeIntervalSince1970] == (NSInteger)[trip->_startDate timeIntervalSince1970]))
+    if (_startDate != trip->_startDate && !((NSInteger) [_startDate timeIntervalSince1970] == (NSInteger) [trip->_startDate timeIntervalSince1970]))
         return NO;
     if (_name != trip->_name && ![_name isEqualToString:trip->_name])
         return NO;
@@ -66,6 +67,7 @@
 - (NSUInteger)hash {
     NSUInteger hash = [_entries hash];
     hash = hash * 31u + [_startDate hash];
+    hash = hash * 31u + [_endDate hash];
     hash = hash * 31u + [_name hash];
     return hash;
 }
@@ -74,30 +76,43 @@
     return _name;
 }
 
--(NSDictionary *) toDictionary {
+- (NSDictionary *)toDictionary {
     NSMutableArray *entriesAsDict = [NSMutableArray new];
-    for(BITripEntry *entry in _entries){
+    for (BITripEntry *entry in _entries) {
         NSDictionary *entryAsDict = [entry toDictionary];
-        [entriesAsDict addObject: entryAsDict];
+        [entriesAsDict addObject:entryAsDict];
     }
     return @{
-            @"startDate": [NSString stringDateFromDate:_startDate],
-            @"name": _name,
-            @"entries": entriesAsDict
+            @"startDate" : [NSString stringDateFromDate:_startDate],
+            @"endDate" : [NSString stringDateFromDate:_endDate],
+            @"name" : _name,
+            @"entries" : entriesAsDict
     };
 }
 
 
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary {
-    NSString* name = dictionary[@"name"];
-    NSDate* startDate = [dictionary[@"startDate"] toDateFromStringDate];
-    NSArray*entriesJsons = dictionary[@"entries"];
+    NSString *name = dictionary[@"name"];
+    NSDate *startDate = [dictionary[@"startDate"] toDateFromStringDate];
+    NSDate *endDate = [dictionary[@"endDate"] toDateFromStringDate];
+    NSArray *entriesJsons = dictionary[@"entries"];
 
-    NSMutableArray*entriesList = [NSMutableArray new];
-    for(NSDictionary *entryDict in entriesJsons){
-        BITripEntry* tripEntry = [[BITripEntry alloc] initFromDictionary: entryDict];
+    NSMutableArray *entriesList = [NSMutableArray new];
+    for (NSDictionary *entryDict in entriesJsons) {
+        BITripEntry *tripEntry = [[BITripEntry alloc] initFromDictionary:entryDict];
         [entriesList addObject:tripEntry];
     }
-    return [[BITrip alloc] initWithStartDate:startDate endDate:nil entries:entriesList name:name];
+    return [[BITrip alloc] initWithStartDate:startDate endDate:endDate entries:entriesList name:name];
+}
+
+- (CGFloat)averageSpeed {
+    CGFloat avgSpeed = 0;
+    for (BITripEntry *entry in _entries) {
+        avgSpeed += entry.speed;
+    }
+
+    avgSpeed /= [_entries count];
+
+    return avgSpeed;
 }
 @end

@@ -46,7 +46,7 @@
         if([newLocation.timestamp timeIntervalSince1970] <= _lastLocationTimeInterval) return;
 
         _lastLocationTimeInterval = [newLocation.timestamp timeIntervalSince1970];
-        NSLog(@"location updated!! %@", newLocation);
+//        NSLog(@"location updated!! %@", newLocation);
         BITripEntry *entry = [[BITripEntry alloc] initWithLocation: newLocation];
         NSLog(@"new trip entry created!! %@", entry);
         [self.delegate tripRecorder:self didRecordTripEntry: entry];
@@ -55,6 +55,7 @@
 }
 
 - (BITrip *)stop {
+    NSLog(@"stop recording trip");
     _recording = NO;
     [_locationManager stopUpdatingLocation];
     NSString *storageTripName = [self createTripName];

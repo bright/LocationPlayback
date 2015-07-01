@@ -93,4 +93,9 @@
     return self;
 }
 
+- (CGFloat)speed {
+    return _speed;
+}
+
+
 @end

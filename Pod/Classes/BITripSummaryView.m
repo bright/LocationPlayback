@@ -51,6 +51,14 @@
         [tripEndDateLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:tripStartDateLabel withOffset:VERTICAL_SPACING];
         [tripEndDateLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
         [tripEndDateLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:LEFT_RIGHT_INSET];
+
+        UILabel *speedLabel = [self createLabel];
+        [self addSubview:speedLabel];
+        speedLabel.text = [NSString stringWithFormat:@"Average speed: %.02f", trip.averageSpeed];
+
+        [speedLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:tripEndDateLabel withOffset:VERTICAL_SPACING];
+        [speedLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
+        [speedLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:LEFT_RIGHT_INSET];
     }
 
     return self;
