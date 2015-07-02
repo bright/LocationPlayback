@@ -39,5 +39,9 @@
 
 }
 
+- (void)clearAnnotations {
+    [_mapView removeAnnotations:_mapView.annotations];
+}
+
 
 @end

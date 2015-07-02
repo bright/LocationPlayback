@@ -1,8 +1,4 @@
 #import "BITripEntry.h"
-
-@import CoreLocation;
-
-#import <CoreGraphics/CoreGraphics.h>
 #import "NSString+Date.h"
 
 @interface BITripEntry ()
@@ -96,5 +92,10 @@
     }
     return self;
 }
+
+- (CGFloat)speed {
+    return _speed;
+}
+
 
 @end

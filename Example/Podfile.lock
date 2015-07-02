@@ -22,16 +22,16 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   LocationPlayback:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
   Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
   Expecta+Snapshots: ca15bfb57e7a0f78f86c7699c2c54ffacfa4ad2a
   FBSnapshotTestCase: 3dc3899168747a0319c5278f5b3445c13a6532dd
-  LocationPlayback: a51ab4516f4881816ab6fc7b37231de0f3c0865c
+  LocationPlayback: 88b63ba1283d8896a9cdc89738cfa6e8df301ec7
   Parse: 7c0f115eff3e0cea3fac08d50bda47154edb8832
   PureLayout: f25f0bb904d5ccfe6e31da3cb869185259f02e0d
   Specta: 9cec98310dca411f7c7ffd6943552b501622abfe
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.36.0

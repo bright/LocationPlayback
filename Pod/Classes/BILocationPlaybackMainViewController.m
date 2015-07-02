@@ -10,46 +10,43 @@
 #import "BILocationRecordingViewController.h"
 #import "BITrip.h"
 #import "BITripViewController.h"
+#import "BIStyles.h"
+#import "ALView+PureLayout.h"
 
-
+#define LEFT_RIGHT_INSET 20
+#define BUTTON_HEIGHT 100
+#define VERTICAL_SPACING 20
 @implementation BILocationPlaybackMainViewController {
 }
 
 - (void)loadView {
     [super loadView];
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor whiteColor];
 
-    UIButton *selectTripToPlayButton = [self createSelectTripToPlayButton];
+    UIButton *selectTripToPlayButton = [BIStyles createButtonWithName:@"Stored trips"];
     [self.view addSubview:selectTripToPlayButton];
-    selectTripToPlayButton.frame = CGRectMake(30, 100, selectTripToPlayButton.frame.size.width, selectTripToPlayButton.frame.size.height);
     [selectTripToPlayButton addTarget:self action:@selector(_selectTripToPlay) forControlEvents:UIControlEventTouchUpInside];
 
-    UIButton *recordNewTrip = [self createRecordNewTripButton];
+    UIButton *recordNewTrip = [BIStyles createButtonWithName:@"Record new trip"];
     [self.view addSubview:recordNewTrip];
-    recordNewTrip.frame = CGRectMake(30, 300, selectTripToPlayButton.frame.size.width, selectTripToPlayButton.frame.size.height);
     [recordNewTrip addTarget:self action:@selector(_recordNewTrip) forControlEvents:UIControlEventTouchUpInside];
+
+    [selectTripToPlayButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:100];
+    [selectTripToPlayButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
+    [selectTripToPlayButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:LEFT_RIGHT_INSET];
+    [selectTripToPlayButton autoSetDimension:ALDimensionHeight toSize:BUTTON_HEIGHT];
+
+    [recordNewTrip autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:selectTripToPlayButton withOffset:VERTICAL_SPACING];
+    [recordNewTrip autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
+    [recordNewTrip autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:LEFT_RIGHT_INSET];
+    [recordNewTrip autoSetDimension:ALDimensionHeight toSize:BUTTON_HEIGHT];
+
 }
 
 - (void)_recordNewTrip {
     BILocationRecordingViewController *recordNewTripVC = [[BILocationRecordingViewController alloc] init];
     recordNewTripVC.delegate = self;
     [self.navigationController pushViewController:recordNewTripVC animated:YES];
-}
-
-- (UIButton *)createSelectTripToPlayButton {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.backgroundColor = [UIColor greenColor];
-    button.frame = CGRectMake(0, 0, 150, 70);
-    [button setTitle:@"Stored trips" forState:UIControlStateNormal];
-    return button;
-}
-
-- (UIButton *)createRecordNewTripButton {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.backgroundColor = [UIColor greenColor];
-    button.frame = CGRectMake(0, 0, 150, 70);
-    [button setTitle:@"Record new trip" forState:UIControlStateNormal];
-    return button;
 }
 
 - (void)_selectTripToPlay {

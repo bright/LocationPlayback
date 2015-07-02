@@ -46,7 +46,7 @@
         if([newLocation.timestamp timeIntervalSince1970] <= _lastLocationTimeInterval) return;
 
         _lastLocationTimeInterval = [newLocation.timestamp timeIntervalSince1970];
-        NSLog(@"location updated!! %@", newLocation);
+//        NSLog(@"location updated!! %@", newLocation);
         BITripEntry *entry = [[BITripEntry alloc] initWithLocation: newLocation];
         NSLog(@"new trip entry created!! %@", entry);
         [self.delegate tripRecorder:self didRecordTripEntry: entry];
@@ -55,17 +55,18 @@
 }
 
 - (BITrip *)stop {
+    NSLog(@"stop recording trip");
     _recording = NO;
     [_locationManager stopUpdatingLocation];
     NSString *storageTripName = [self createTripName];
-    return [[BITrip alloc] initWithStartDate:_startDate entries:_tripEntries name:storageTripName];
+    NSDate *tripEndDate = [NSDate new];
+    return [[BITrip alloc] initWithStartDate:_startDate endDate:tripEndDate entries:_tripEntries name:storageTripName];
 }
 
 - (NSString *)createTripName {
     NSDate *currentDate = [NSDate new];
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     dateFormatter.dateFormat = @"dd.MM.yy HH:mm:ss";
-    dateFormatter.timeStyle = NSDateFormatterFullStyle;
     NSString *currentDateString = [dateFormatter stringFromDate:currentDate];
     NSString *storageTripName = [NSString stringWithFormat:@"%@ %@", _tripName, currentDateString];
     return storageTripName;

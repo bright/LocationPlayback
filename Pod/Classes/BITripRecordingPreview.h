@@ -7,4 +7,6 @@
 
 
 - (instancetype)initWithTripRecorder:(BITripRecorder *)tripRecorder;
+
+- (void)clearAnnotations;
 @end
