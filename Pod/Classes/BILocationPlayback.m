@@ -1,11 +1,14 @@
 #import "BILocationPlayback.h"
 #import "BILocationPlaybackMainViewController.h"
 #import "BILocationPlaybackConfiguration.h"
+#import "BITripPlaybackPreview.h"
+#import "BITrip.h"
 
 @implementation BILocationPlayback {
     UIViewController *_previousVC;
     BILocationPlaybackMainViewController *_locationPlaybackMainVC;
     BILocationPlaybackConfiguration *_configuration;
+
 }
 
 - (instancetype)init {
@@ -35,12 +38,23 @@
     _previousVC = window.rootViewController;
     _locationPlaybackMainVC = [[BILocationPlaybackMainViewController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_locationPlaybackMainVC];
-    window.rootViewController = navigationController;
+    [window.rootViewController presentViewController:navigationController animated:YES completion:nil];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Close"
                                                                    style:UIBarButtonItemStyleDone target:self
                                                                   action:@selector(closeLocationPlaybackVC:)];
     _locationPlaybackMainVC.navigationItem.rightBarButtonItem = doneButton;
 
+}
+
+- (void)showMiniMapPlayback {
+    UIWindow *window = [self getWindow];
+
+    BITrip *trip = [[BITrip alloc] initWithStartDate:[NSDate date] endDate:nil entries:nil name:@"test"];
+    __weak BITripPlayback *playback = [[BITripPlayback alloc] initWithTrip:trip];
+
+    BITripPlaybackPreview *previewMap = [[BITripPlaybackPreview alloc] initWithTripPlayback:playback gesturesEnabled:YES];
+    previewMap.frame = CGRectMake(0, 0, 200, 200);
+    [window.rootViewController.view addSubview:previewMap];
 }
 
 - (UIWindow *)getWindow {
@@ -54,7 +68,7 @@
 
 -(void) hide {
     UIWindow *window = [self getWindow];
-    window.rootViewController = _previousVC;
+    [window.rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(BILocationPlaybackConfiguration *) getConfiguration {

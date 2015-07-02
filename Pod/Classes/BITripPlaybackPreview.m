@@ -6,27 +6,54 @@
 @import MapKit;
 
 @implementation BITripPlaybackPreview {
-    __weak BITripPlayback* _tripPlayback;
+    __weak BITripPlayback *_tripPlayback;
     MKMapView *_mapView;
 }
 
-- (instancetype)initWithTripPlayback:(__weak BITripPlayback *)tripPlayback {
+- (instancetype)initWithTripPlayback:(__weak BITripPlayback *)tripPlayback gesturesEnabled:(BOOL)gesturesEnabled {
     self = [super init];
     if (self) {
         _mapView = [MKMapView new];
-
         _tripPlayback = tripPlayback;
         _tripPlayback.delegate = self;
-        [self addSubview: _mapView];
+        [self addSubview:_mapView];
         [_mapView autoPinEdgesToSuperviewEdgesWithInsets:ALEdgeInsetsZero];
+
+        self.gesturesEnabled = gesturesEnabled;
+        [self setupGesturesIfEnabled];
+
     }
 
     return self;
 }
 
-+ (instancetype)previewWithTripPlayback:(__weak BITripPlayback *)tripPlayback {
-    return [[self alloc] initWithTripPlayback:tripPlayback];
+- (void)setupGesturesIfEnabled {
+    if (self.gesturesEnabled) {
+        _mapView.userInteractionEnabled = NO;
+
+        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
+        [panGestureRecognizer setMinimumNumberOfTouches:1];
+        [panGestureRecognizer setMaximumNumberOfTouches:1];
+        [self addGestureRecognizer:panGestureRecognizer];
+
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction)];
+        [self addGestureRecognizer:tapGestureRecognizer];
+    }
+
 }
+
+- (void)tapGestureAction {
+    [self removeFromSuperview];
+}
+
+- (void)move:(UIPanGestureRecognizer *)sender {
+    self.center = [sender locationInView:self.superview];
+}
+
++ (instancetype)previewWithTripPlayback:(__weak BITripPlayback *)tripPlayback {
+    return [[self alloc] initWithTripPlayback:tripPlayback gesturesEnabled:NO];
+}
+
 
 - (void)tripPlaybackEnded:(BITripPlayback *)playback {
 
