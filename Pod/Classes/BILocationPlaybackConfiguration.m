@@ -13,6 +13,7 @@
     self = [super init];
     if (self) {
         _repositoryBuilder = [[BILocalRepositoryBuilder alloc] init];
+        _previewSize = CGSizeMake(200, 200);
     }
 
     return self;
@@ -25,6 +26,5 @@
 - (id <BITripRepository>)createStorage {
     return [_repositoryBuilder newRepository];
 }
-
 
 @end

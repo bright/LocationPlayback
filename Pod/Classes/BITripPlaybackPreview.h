@@ -7,14 +7,8 @@
 
 @interface BITripPlaybackPreview : UIView <BITripPlaybackProtocol>
 
-@property (nonatomic) BOOL gesturesEnabled;
-
-- (instancetype)initWithTripPlayback:(__weak BITripPlayback *)tripPlayback gesturesEnabled:(BOOL)gesturesEnabled;
-
-- (void)clearAnnotations;
+- (instancetype)initWithTripPlayback:(__weak BITripPlayback *)tripPlayback;
 
 + (instancetype)previewWithTripPlayback:(__weak BITripPlayback *)tripPlayback;
-
-- (void)move:(UIPanGestureRecognizer *)sender;
 
 @end

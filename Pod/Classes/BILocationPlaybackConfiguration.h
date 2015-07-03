@@ -6,7 +6,10 @@
 
 @interface BILocationPlaybackConfiguration : NSObject
 
+@property (nonatomic) CGSize previewSize;
+
 - (void)setTripRepositoriesBuilder:(id <BITripRepositoryBuilder>)repositoryBuilder;
 
 - (id <BITripRepository>)createStorage;
+
 @end

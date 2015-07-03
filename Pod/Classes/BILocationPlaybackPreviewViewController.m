@@ -42,7 +42,7 @@
     _playback = [[BITripPlayback alloc] initWithTrip:_trip];
     _playback.delegate = self;
     _playbackForPreview = [[BITripPlayback alloc] initWithTrip:_trip];
-    _playbackPreview = [[BITripPlaybackPreview alloc] initWithTripPlayback:_playbackForPreview gesturesEnabled:NO];
+    _playbackPreview = [[BITripPlaybackPreview alloc] initWithTripPlayback:_playbackForPreview];
     [self.view addSubview:_playbackPreview];
 
     [_playbackPreview autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:100];

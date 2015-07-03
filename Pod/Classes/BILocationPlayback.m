@@ -3,6 +3,7 @@
 #import "BILocationPlaybackConfiguration.h"
 #import "BITripPlaybackPreview.h"
 #import "BITrip.h"
+#import "BITripPreviewPresenter.h"
 
 @implementation BILocationPlayback {
     UIViewController *_previousVC;
@@ -33,7 +34,7 @@
     return _instance;
 }
 
--(void) show {
+- (void)show {
     UIWindow *window = [self getWindow];
     _previousVC = window.rootViewController;
     _locationPlaybackMainVC = [[BILocationPlaybackMainViewController alloc] init];
@@ -47,14 +48,10 @@
 }
 
 - (void)showMiniMapPlayback {
-    UIWindow *window = [self getWindow];
-
     BITrip *trip = [[BITrip alloc] initWithStartDate:[NSDate date] endDate:nil entries:nil name:@"test"];
-    __weak BITripPlayback *playback = [[BITripPlayback alloc] initWithTrip:trip];
+    BITripPreviewPresenter *previewPresenter = [[BITripPreviewPresenter alloc] initWithTrip:trip];
 
-    BITripPlaybackPreview *previewMap = [[BITripPlaybackPreview alloc] initWithTripPlayback:playback gesturesEnabled:YES];
-    previewMap.frame = CGRectMake(0, 0, 200, 200);
-    [window.rootViewController.view addSubview:previewMap];
+    [previewPresenter show];
 }
 
 - (UIWindow *)getWindow {
@@ -66,12 +63,12 @@
     [self hide];
 }
 
--(void) hide {
+- (void)hide {
     UIWindow *window = [self getWindow];
     [window.rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(BILocationPlaybackConfiguration *) getConfiguration {
+- (BILocationPlaybackConfiguration *)getConfiguration {
     return _configuration;
 }
 
