@@ -36,6 +36,9 @@
     self.title = [_trip getName];
     self.view.backgroundColor = [UIColor whiteColor];
 
+    UIBarButtonItem *hideBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Hide" style:UIBarButtonItemStyleDone target:self action:@selector(hideAction)];
+    self.navigationItem.rightBarButtonItem = hideBarButtonItem;
+
     _playback = [[BITripPlayback alloc] initWithTrip:_trip];
     _playback.delegate = self;
     _playbackForPreview = [[BITripPlayback alloc] initWithTrip:_trip];
@@ -78,6 +81,11 @@
     [_latitudeLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
 }
 
+- (void)hideAction {
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    [window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)playAction {
     [self startPreview];
 }
@@ -97,7 +105,6 @@
 }
 
 - (void)tripPlaybackStarted:(BITripPlayback *)playback {
-
 }
 
 

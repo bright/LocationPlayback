@@ -1,11 +1,15 @@
 #import "BILocationPlayback.h"
 #import "BILocationPlaybackMainViewController.h"
 #import "BILocationPlaybackConfiguration.h"
+#import "BITripPlaybackPreview.h"
+#import "BITrip.h"
+#import "BITripPreviewPresenter.h"
 
 @implementation BILocationPlayback {
     UIViewController *_previousVC;
     BILocationPlaybackMainViewController *_locationPlaybackMainVC;
     BILocationPlaybackConfiguration *_configuration;
+
 }
 
 - (instancetype)init {
@@ -30,17 +34,24 @@
     return _instance;
 }
 
--(void) show {
+- (void)show {
     UIWindow *window = [self getWindow];
     _previousVC = window.rootViewController;
     _locationPlaybackMainVC = [[BILocationPlaybackMainViewController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_locationPlaybackMainVC];
-    window.rootViewController = navigationController;
+    [window.rootViewController presentViewController:navigationController animated:YES completion:nil];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Close"
                                                                    style:UIBarButtonItemStyleDone target:self
                                                                   action:@selector(closeLocationPlaybackVC:)];
     _locationPlaybackMainVC.navigationItem.rightBarButtonItem = doneButton;
 
+}
+
+- (void)showMiniMapPlayback {
+    BITrip *trip = [[BITrip alloc] initWithStartDate:[NSDate date] endDate:nil entries:nil name:@"test"];
+    BITripPreviewPresenter *previewPresenter = [[BITripPreviewPresenter alloc] initWithTrip:trip];
+
+    [previewPresenter show];
 }
 
 - (UIWindow *)getWindow {
@@ -52,12 +63,12 @@
     [self hide];
 }
 
--(void) hide {
+- (void)hide {
     UIWindow *window = [self getWindow];
-    window.rootViewController = _previousVC;
+    [window.rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(BILocationPlaybackConfiguration *) getConfiguration {
+- (BILocationPlaybackConfiguration *)getConfiguration {
     return _configuration;
 }
 

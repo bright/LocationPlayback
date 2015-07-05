@@ -25,9 +25,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    UIGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(openPlayback:)];
+    [self.view addGestureRecognizer:pinchGesture];
 
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openMiniMap:)];
+    tapGesture.numberOfTapsRequired = 2;
+    [self.view addGestureRecognizer:tapGesture];
+}
+
+- (void)openMiniMap:(id)openMiniMap {
+    [[BILocationPlayback instance] showMiniMapPlayback];
+}
+
+- (void)openPlayback:(id)openPlayback {
     [[BILocationPlayback instance] show];
-
 }
 
 @end

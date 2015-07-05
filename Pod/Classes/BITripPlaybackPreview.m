@@ -6,7 +6,7 @@
 @import MapKit;
 
 @implementation BITripPlaybackPreview {
-    __weak BITripPlayback* _tripPlayback;
+    __weak BITripPlayback *_tripPlayback;
     MKMapView *_mapView;
 }
 
@@ -14,10 +14,10 @@
     self = [super init];
     if (self) {
         _mapView = [MKMapView new];
-
         _tripPlayback = tripPlayback;
         _tripPlayback.delegate = self;
-        [self addSubview: _mapView];
+        [self addSubview:_mapView];
+        
         [_mapView autoPinEdgesToSuperviewEdgesWithInsets:ALEdgeInsetsZero];
     }
 
@@ -27,6 +27,7 @@
 + (instancetype)previewWithTripPlayback:(__weak BITripPlayback *)tripPlayback {
     return [[self alloc] initWithTripPlayback:tripPlayback];
 }
+
 
 - (void)tripPlaybackEnded:(BITripPlayback *)playback {
 
@@ -40,10 +41,6 @@
 
 - (void)tripPlaybackStarted:(BITripPlayback *)playback {
 
-}
-
-- (void)clearAnnotations {
-    [_mapView removeAnnotations:_mapView.annotations];
 }
 
 @end

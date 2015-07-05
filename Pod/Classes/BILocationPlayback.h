@@ -9,6 +9,8 @@
 
 - (void)show;
 
+- (void)showMiniMapPlayback;
+
 - (BILocationPlaybackConfiguration *)getConfiguration;
 
 @end
