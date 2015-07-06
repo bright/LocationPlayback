@@ -6,12 +6,14 @@
 
 @implementation BICloudRepositoryBuilder {}
 
-- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions {
+- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions
+                        applicationId:(NSString *)applicationId
+                            clientKey:(NSString *)clientKey {
     self = [super init];
     if (self) {
         [Parse enableLocalDatastore];
-        [Parse setApplicationId:@"zwWNbqiQCuKo3hIKfnHPzIJfWgs2OjmyQSWijHlf"
-                      clientKey:@"yp7XjY1WvJnPRJNcg9ukAGODnqZUCeshLVCJvSQs"];
+        [Parse setApplicationId:applicationId
+                      clientKey:clientKey];
         [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     }
     return self;

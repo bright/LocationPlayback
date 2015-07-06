@@ -16,7 +16,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    BICloudRepositoryBuilder* repositoryBuilder = [[BICloudRepositoryBuilder alloc] initWithLaunchOptions:launchOptions];
+    BICloudRepositoryBuilder* repositoryBuilder = [[BICloudRepositoryBuilder alloc] initWithLaunchOptions:launchOptions
+                                                                                            applicationId:@"zwWNbqiQCuKo3hIKfnHPzIJfWgs2OjmyQSWijHlf"
+                                                                                                clientKey:@"yp7XjY1WvJnPRJNcg9ukAGODnqZUCeshLVCJvSQs"];
     [[[BILocationPlayback instance] getConfiguration] setTripRepositoriesBuilder: repositoryBuilder];
     return YES;
 }
