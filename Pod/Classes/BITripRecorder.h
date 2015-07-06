@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 
+@import CoreLocation;
 @protocol CLLocationManagerDelegate;
 @class BITrip;
 @protocol BITripRecorderProtocol;

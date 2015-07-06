@@ -9,7 +9,6 @@
 @implementation BILocationPlayback {
     BILocationPlaybackMainViewController *_locationPlaybackMainVC;
     BILocationPlaybackConfiguration *_configuration;
-    NSString *const BILocationPlaybackTripStarted;
     BITripPlayback *_tripPlayback;
 }
 

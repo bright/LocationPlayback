@@ -5,8 +5,4 @@
 
 @interface BITripMap : UIView
 - (instancetype)initWithTrip:(BITrip *)trip;
-
-+ (instancetype)mapWithTrip:(BITrip *)trip;
-
-
 @end

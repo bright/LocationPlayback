@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
                        LocationPlayback should help you with recording and playback location of your device. We are using that lib in Bright Inventions as it helps a lot with testing the location based apps.
                        DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/LocationPlayback"
+  s.homepage         = "https://github.com/bright/LocationPlayback"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Daniel Makurat" => "daniel.makurat@gmail.com" }

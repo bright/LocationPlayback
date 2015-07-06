@@ -23,7 +23,7 @@
 
         UILabel *entriesCountLabel = [self createLabel];
         [self addSubview:entriesCountLabel];
-        NSUInteger locationEntriesCount = [[trip getEntries] count];
+        NSInteger locationEntriesCount = [[trip getEntries] count];
         entriesCountLabel.text = [NSString stringWithFormat:@"Entries count: %d", locationEntriesCount];
 
         [entriesCountLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:tripNameLabel withOffset:VERTICAL_SPACING];
@@ -71,8 +71,4 @@
     return tripNameLabel;
 }
 
-
-- (void)_storeTrip {
-//    [self.delegate tripSummary]
-}
 @end
