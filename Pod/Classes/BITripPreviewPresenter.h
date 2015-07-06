@@ -3,6 +3,7 @@
 @class BITrip;
 
 @interface BITripPreviewPresenter : NSObject
+
 - (instancetype)initWithTrip:(BITrip *)trip;
 
 - (void)showOnView:(UIView *)view;

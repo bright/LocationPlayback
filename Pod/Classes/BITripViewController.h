@@ -10,5 +10,5 @@
 @end
 
 @protocol BITripViewControllerProtocol <NSObject>
-- (void)tripViewController:(BITripViewController *)sender playbackRequestedOnTrip:(BITrip *)trip;
+- (void)tripViewController:(BITripViewController *)sender openPlaybackViewRequestedOnTrip:(BITrip *)trip;
 @end

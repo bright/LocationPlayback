@@ -21,8 +21,7 @@
 }
 
 - (void)setupPresenterWithTrip:(BITrip *)trip {
-    __weak BITripPlayback *playback = [[BITripPlayback alloc] initWithTrip:trip];
-    _previewMap = [[BITripPlaybackPreview alloc] initWithTripPlayback:playback];
+    _previewMap = [[BITripPlaybackPreview alloc] init];
 
     [self disableUserInteractionWithSubviews];
     [self setupPresenterGestures];

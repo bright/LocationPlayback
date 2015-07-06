@@ -7,12 +7,9 @@
 
 @interface BITripRecorder : NSObject <CLLocationManagerDelegate>
 
-@property (nonatomic, weak) id<BITripRecorderProtocol> delegate;
+@property(nonatomic, weak) id <BITripRecorderProtocol> delegate;
 
 - (instancetype)initWithTripName:(NSString *)tripName;
-
-+ (instancetype)recorderWithTripName:(NSString *)tripName;
-
 
 - (void)start;
 
@@ -23,6 +20,8 @@
 @protocol BITripRecorderProtocol <NSObject>
 @optional
 - (void)tripRecorder:(BITripRecorder *)recorder didRecordTripEntry:(BITripEntry *)entry;
+
 - (void)tripRecorderDidStartRecording:(BITripRecorder *)recorder;
-- (void)tripRecorder:(BITripRecorder *)recorder didStopRecordingTrip: (BITrip *) recorderTrip;
+
+- (void)tripRecorder:(BITripRecorder *)recorder didStopRecordingTrip:(BITrip *)recorderTrip;
 @end

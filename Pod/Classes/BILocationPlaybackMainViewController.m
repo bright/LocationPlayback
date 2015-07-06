@@ -16,8 +16,8 @@
 #define LEFT_RIGHT_INSET 20
 #define BUTTON_HEIGHT 100
 #define VERTICAL_SPACING 20
-@implementation BILocationPlaybackMainViewController {
-}
+
+@implementation BILocationPlaybackMainViewController {}
 
 - (void)loadView {
     [super loadView];
@@ -98,14 +98,18 @@
     }];
 }
 
-- (void)tripViewController:(BITripViewController *)sender playbackRequestedOnTrip:(BITrip *)trip {
+- (void)tripViewController:(BITripViewController *)sender openPlaybackViewRequestedOnTrip:(BITrip *)trip {
     BILocationPlaybackPreviewViewController *previewVC = [[BILocationPlaybackPreviewViewController alloc] initWithTrip:trip];
     previewVC.delegate = self;
     [self.navigationController pushViewController:previewVC animated:YES];
 }
 
-- (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller onPlaybackEndedForTrip:(BITrip *)trip {
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStartRequested:(BITrip *)trip{
+    [self.delegate userRequestedTripPlaybackOnTrip: trip];
+}
+
+- (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStopRequested:(BITrip *)trip {
+    [self.delegate userRequestedStopPlaybackOnTrip: trip];
 }
 
 

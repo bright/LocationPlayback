@@ -1,9 +1,20 @@
 #import <Foundation/Foundation.h>
 
 @class BILocationPlaybackConfiguration;
+@class BITrip;
+@class BITripEntry;
+@protocol BILocationPlaybackMainViewControllerProtocol;
+@protocol BITripPlaybackProtocol;
 
+@interface BILocationPlayback : NSObject <BILocationPlaybackMainViewControllerProtocol, BITripPlaybackProtocol>
 
-@interface BILocationPlayback : NSObject
+- (NSString *)tripStartedNotification;
+
+- (NSString *)tripEndedNotification;
+
+- (NSString *)tripUpdateNotification;
+
+-(BOOL) isTripPlaybackPlaying;
 
 + (BILocationPlayback *)instance;
 
@@ -13,4 +24,7 @@
 
 - (BILocationPlaybackConfiguration *)getConfiguration;
 
+- (BITrip *)getTripFromUserInfo:(NSDictionary *)userInfo;
+
+- (BITripEntry *)getTripEntryFromUserInfo:(NSDictionary *)userInfo;
 @end

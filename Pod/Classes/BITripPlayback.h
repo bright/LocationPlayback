@@ -13,7 +13,11 @@
 
 + (instancetype)playbackWithTrip:(BITrip *)trip;
 
+- (void)stopRequested;
+
 - (void)play;
+
+-(BITrip *) getTrip;
 
 @end
 

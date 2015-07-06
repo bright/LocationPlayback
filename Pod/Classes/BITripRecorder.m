@@ -23,11 +23,6 @@
     return self;
 }
 
-+ (instancetype)recorderWithTripName:(NSString *)tripName {
-    return [[self alloc] initWithTripName:tripName];
-}
-
-
 - (void)start {
     NSLog(@"start recording trip");
     _lastLocationTimeInterval = 0;
@@ -46,16 +41,13 @@
         if([newLocation.timestamp timeIntervalSince1970] <= _lastLocationTimeInterval) return;
 
         _lastLocationTimeInterval = [newLocation.timestamp timeIntervalSince1970];
-//        NSLog(@"location updated!! %@", newLocation);
         BITripEntry *entry = [[BITripEntry alloc] initWithLocation: newLocation];
-        NSLog(@"new trip entry created!! %@", entry);
         [self.delegate tripRecorder:self didRecordTripEntry: entry];
         [_tripEntries addObject: entry];
     }
 }
 
 - (BITrip *)stop {
-    NSLog(@"stop recording trip");
     _recording = NO;
     [_locationManager stopUpdatingLocation];
     NSString *storageTripName = [self createTripName];

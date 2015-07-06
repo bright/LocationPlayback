@@ -5,10 +5,6 @@
 @class BITripPlayback;
 
 
-@interface BITripPlaybackPreview : UIView <BITripPlaybackProtocol>
-
-- (instancetype)initWithTripPlayback:(__weak BITripPlayback *)tripPlayback;
-
-+ (instancetype)previewWithTripPlayback:(__weak BITripPlayback *)tripPlayback;
+@interface BITripPlaybackPreview : UIView
 
 @end

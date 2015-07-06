@@ -8,6 +8,11 @@
 
 // https://github.com/Specta/Specta
 
+#import <Specta/SpectaDSL.h>
+#import <Specta/SpectaDSL.h>
+#import <Specta/SPTSpec.h>
+#import <Expecta/Expecta.h>
+
 SpecBegin(InitialSpecs)
 
 describe(@"these will fail", ^{

@@ -3,6 +3,9 @@
 #import <LocationPlayback/BITrip.h>
 #import <LocationPlayback/BITripEntry.h>
 #import <LocationPlayback/BITripSerializer.h>
+#import <Specta/SpectaDSL.h>
+#import <Specta/SPTSpec.h>
+#import <Expecta/Expecta.h>
 
 SpecBegin(BITripSerializerTests)
 

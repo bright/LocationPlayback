@@ -1,10 +1,11 @@
+#import "BITripPlayback.h"
 #import "BILocationPlaybackPreviewViewController.h"
 #import "BITrip.h"
-#import "BITripPlayback.h"
 #import "BITripPlaybackPreview.h"
 #import "BITripEntry.h"
 #import "ALView+PureLayout.h"
 #import "BIStyles.h"
+#import "BILocationPlayback.h"
 
 #define VERTICAL_SPACING 20
 #define LEFT_RIGHT_INSET 20
@@ -15,12 +16,12 @@
     BITrip *_trip;
     BITripPlayback *_playback;
     BITripPlaybackPreview *_playbackPreview;
-    BITripPlayback *_playbackForPreview;
-
     UIButton *_playButton;
     UILabel *_speedLabel;
     UILabel *_longitudeLabel;
     UILabel *_latitudeLabel;
+    UIButton* _stopButton;
+    BILocationPlayback *_locationPlayback;
 }
 - (instancetype)initWithTrip:(BITrip *)trip {
     self = [super init];
@@ -39,10 +40,7 @@
     UIBarButtonItem *hideBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Hide" style:UIBarButtonItemStyleDone target:self action:@selector(hideAction)];
     self.navigationItem.rightBarButtonItem = hideBarButtonItem;
 
-    _playback = [[BITripPlayback alloc] initWithTrip:_trip];
-    _playback.delegate = self;
-    _playbackForPreview = [[BITripPlayback alloc] initWithTrip:_trip];
-    _playbackPreview = [[BITripPlaybackPreview alloc] initWithTripPlayback:_playbackForPreview];
+    _playbackPreview = [[BITripPlaybackPreview alloc] init];
     [self.view addSubview:_playbackPreview];
 
     [_playbackPreview autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:100];
@@ -58,6 +56,15 @@
     [_playButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
     [_playButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:LEFT_RIGHT_INSET];
     [_playButton autoSetDimension:ALDimensionHeight toSize:BUTTON_HEIGHT];
+
+    _stopButton = [BIStyles createButtonWithName:@"Stop"];
+    [_stopButton addTarget:self action:@selector(stopAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_stopButton];
+
+    [_stopButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_playbackPreview withOffset:VERTICAL_SPACING];
+    [_stopButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
+    [_stopButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:LEFT_RIGHT_INSET];
+    [_stopButton autoSetDimension:ALDimensionHeight toSize:BUTTON_HEIGHT];
 
     _speedLabel = [UILabel new];
     _speedLabel.text = @"Speed: ";
@@ -79,6 +86,18 @@
 
     [_latitudeLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_longitudeLabel withOffset:VERTICAL_SPACING];
     [_latitudeLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
+
+    _locationPlayback = [BILocationPlayback instance];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tripUpdated:) name:[_locationPlayback tripUpdateNotification] object:_locationPlayback];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tripStarted:) name:[_locationPlayback tripStartedNotification] object:_locationPlayback];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tripEnded:) name:[_locationPlayback tripEndedNotification] object:_locationPlayback];
+
+    _stopButton.hidden = ![_locationPlayback isTripPlaybackPlaying];
+    _playButton.hidden = [_locationPlayback isTripPlaybackPlaying];
+}
+
+- (void)stopAction {
+    [self.delegate playbackPreviewVC:self tripPlaybackStopRequested:_trip];
 }
 
 - (void)hideAction {
@@ -87,24 +106,24 @@
 }
 
 - (void)playAction {
-    [self startPreview];
+    [self.delegate playbackPreviewVC:self tripPlaybackStartRequested:_trip];
 }
 
-- (void)startPreview {
-    [_playback play];
-    [_playbackForPreview play];
+- (void)tripEnded:(NSNotification *)notification {
+    _playButton.hidden = NO;
+    _stopButton.hidden = YES;
 }
 
-- (void)tripPlaybackEnded:(BITripPlayback *)playback {
+- (void)tripStarted:(NSNotification *)notification {
+    _playButton.hidden = YES;
+    _stopButton.hidden = NO;
 }
 
-- (void)tripPlayback:(BITripPlayback *)playback playEntry:(BITripEntry *)entry {
+- (void)tripUpdated:(NSNotification *)notification {
+    BITripEntry *entry = [_locationPlayback getTripEntryFromUserInfo:notification.userInfo];
     _speedLabel.text = [NSString stringWithFormat:@"Speed: %.02f", entry.speed];
     _longitudeLabel.text = [NSString stringWithFormat:@"Longitude: %f", entry.getCoordinate.longitude];
     _latitudeLabel.text = [NSString stringWithFormat:@"Latitude: %f", entry.getCoordinate.latitude];
-}
-
-- (void)tripPlaybackStarted:(BITripPlayback *)playback {
 }
 
 

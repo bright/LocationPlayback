@@ -22,7 +22,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   LocationPlayback:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
@@ -34,4 +34,4 @@ SPEC CHECKSUMS:
   PureLayout: f25f0bb904d5ccfe6e31da3cb869185259f02e0d
   Specta: 9cec98310dca411f7c7ffd6943552b501622abfe
 
-COCOAPODS: 0.36.0
+COCOAPODS: 0.37.2

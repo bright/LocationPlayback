@@ -65,7 +65,7 @@
 }
 
 - (void)_playback {
-    [self.delegate tripViewController:self playbackRequestedOnTrip: _trip];
+    [self.delegate tripViewController:self openPlaybackViewRequestedOnTrip:_trip];
 }
 
 - (UIButton *)createPlaybackButton {

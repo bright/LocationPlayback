@@ -4,6 +4,9 @@
 #import <LocationPlayback/BITripEntry.h>
 #import <LocationPlayback/BITripLocalRepository.h>
 #import <LocationPlayback/BITripMetadata.h>
+#import <Specta/SpectaDSL.h>
+#import <Specta/SPTSpec.h>
+#import <Expecta/Expecta.h>
 
 SpecBegin(BITripLocalRepositoryTests)
 
