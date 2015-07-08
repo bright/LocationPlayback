@@ -3,6 +3,6 @@
 
 @interface BICloudRepositoryBuilder : NSObject<BITripRepositoryBuilder>
 
-- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions applicationId:(NSString *)applicationId clientKey:(NSString *)clientKey;
+- (instancetype)initWithApplicationId:(NSString *)applicationId clientKey:(NSString *)clientKey;
 
 @end
