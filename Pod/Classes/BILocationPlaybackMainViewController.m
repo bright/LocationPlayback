@@ -19,13 +19,14 @@
 
 @implementation BILocationPlaybackMainViewController {
     BOOL _shouldPopPreviewControllerOnTripStop;
+    id <BITripRepository> _storage;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _shouldPopPreviewControllerOnTripStop = NO;
-    if([[BILocationPlayback instance] isTripPlaybackPlaying]){
-        BITrip* trip = [[BILocationPlayback instance] getPlayedTrip];
+    if ([[BILocationPlayback instance] isTripPlaybackPlaying]) {
+        BITrip *trip = [[BILocationPlayback instance] getPlayedTrip];
         BILocationPlaybackPreviewViewController *previewVC = [[BILocationPlaybackPreviewViewController alloc] initWithTrip:trip];
         previewVC.delegate = self;
         [self.navigationController pushViewController:previewVC animated:NO];
@@ -35,6 +36,7 @@
 
 - (void)loadView {
     [super loadView];
+    _storage = [self createStorage];
     self.title = @"Location Playback";
     self.view.backgroundColor = [UIColor whiteColor];
 
@@ -69,30 +71,32 @@
     __weak BILocationPlaybackMainViewController *weakSelf = self;
     [storage loadAllTripsMetadata:^(NSArray *tripsMetadata, NSError *error) {
         BILocationPlaybackMainViewController *strongSelf = weakSelf;
-        if(error == nil){
-            [strongSelf showTripsViewController: tripsMetadata];
+        if (error == nil) {
+            BOOL allowDelete = [storage respondsToSelector:@selector(deleteTripForMetadata:responseBlock:)];
+            [strongSelf showTripsViewController:tripsMetadata allowDelete:allowDelete];
         }
     }];
 }
 
-- (void)showTripsViewController:(NSArray *)tripsMetadata {
-    BITripsViewController *tripsViewController = [[BITripsViewController alloc] initWithTripMetadata:tripsMetadata];
+- (void)showTripsViewController:(NSArray *)tripsMetadata allowDelete:(BOOL)allowDelete {
+    BITripsViewController *tripsViewController = [[BITripsViewController alloc] initWithTripsMetadata:tripsMetadata];
     tripsViewController.delegate = self;
+    if(allowDelete){
+        [tripsViewController enableDelete];
+    }
     [self.navigationController pushViewController:tripsViewController animated:YES];
 }
 
 - (void)tripsViewController:(BITripsViewController *)controller onTripSelected:(BITripMetadata *)selectedTripMetadata {
-    id <BITripRepository> storage = [self createStorage];
     __weak BILocationPlaybackMainViewController *weakSelf = self;
-    [storage loadTripWithMetadata: selectedTripMetadata responseBlock:^(BITrip* trip, NSError * error){
+    [_storage loadTripWithMetadata:selectedTripMetadata responseBlock:^(BITrip *trip, NSError *error) {
         BILocationPlaybackMainViewController *strongSelf = weakSelf;
-        if(trip && error == nil){
-            [strongSelf showTripViewControllerForTrip: trip];
+        if (trip && error == nil) {
+            [strongSelf showTripViewControllerForTrip:trip];
         } else {
             NSLog(@"something went wrong");
         }
     }];
-    
 }
 
 - (void)showTripViewControllerForTrip:(BITrip *)trip {
@@ -102,12 +106,21 @@
 }
 
 - (id <BITripRepository>)createStorage {
-     return [[[BILocationPlayback instance] getConfiguration] createStorage];
+    return [[[BILocationPlayback instance] getConfiguration] createStorage];
+}
+
+- (void)tripsViewController:(BITripsViewController *)controller onTripDeleted:(BITripMetadata *)metadata {
+    [_storage deleteTripForMetadata:metadata responseBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"trip deleted success?: %@", @(succeeded));
+        if(error){
+            NSLog(@"error occured while deleting trip: %@", error);
+        }
+    }];
 }
 
 - (void)recordingVC:(BILocationRecordingViewController *)sender tripRecorded:(BITrip *)recordedTrip {
-    [[self createStorage] storeTrip:recordedTrip responseBlock:^(BITripMetadata *metadata, NSError *error) {
-        if(error != nil){
+    [_storage storeTrip:recordedTrip responseBlock:^(BITripMetadata *metadata, NSError *error) {
+        if (error != nil) {
             NSLog(@"Trip not recorder, trip recording error!: %@", [error description]);
         }
     }];
@@ -119,16 +132,15 @@
     [self.navigationController pushViewController:previewVC animated:YES];
 }
 
-- (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStartRequested:(BITrip *)trip{
-    [self.delegate userRequestedTripPlaybackOnTrip: trip];
+- (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStartRequested:(BITrip *)trip {
+    [self.delegate userRequestedTripPlaybackOnTrip:trip];
 }
 
 - (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStopRequested:(BITrip *)trip {
-    [self.delegate userRequestedStopPlaybackOnTrip: trip];
-    if(_shouldPopPreviewControllerOnTripStop){
+    [self.delegate userRequestedStopPlaybackOnTrip:trip];
+    if (_shouldPopPreviewControllerOnTripStop) {
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
-
 
 @end

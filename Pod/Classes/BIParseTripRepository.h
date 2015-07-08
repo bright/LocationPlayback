@@ -2,5 +2,5 @@
 #import "BITripRepository.h"
 
 
-@interface BICloudTripRepository : NSObject<BITripRepository>
+@interface BIParseTripRepository : NSObject<BITripRepository>
 @end

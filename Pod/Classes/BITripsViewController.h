@@ -6,7 +6,9 @@
 
 @interface BITripsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, weak) id<BITripsViewControllerProtocol> delegate;
-- (instancetype)initWithTripMetadata:(NSArray *)tripMetadata;
+- (instancetype)initWithTripsMetadata:(NSArray *)tripsMetadata;
+
+- (instancetype)enableDelete;
 
 + (instancetype)controllerWithTripMetadata:(NSArray *)tripMetadata;
 
@@ -14,4 +16,5 @@
 
 @protocol BITripsViewControllerProtocol <NSObject>
 - (void)tripsViewController:(BITripsViewController *)controller onTripSelected:(BITripMetadata *)selectedTripMetadata;
+- (void)tripsViewController:(BITripsViewController *)controller onTripDeleted:(BITripMetadata *)deleted;
 @end

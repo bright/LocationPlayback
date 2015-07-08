@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Daniel Makurat. All rights reserved.
 //
 
-#import <LocationPlayback/BICloudTripRepository.h>
+#import "BIParseTripRepository.h"
 #import <LocationPlayback/BICloudRepositoryBuilder.h>
 #import <LocationPlayback/BILocationPlayback.h>
 #import <LocationPlayback/BILocationPlaybackConfiguration.h>

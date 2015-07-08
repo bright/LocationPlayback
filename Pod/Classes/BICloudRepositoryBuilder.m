@@ -1,7 +1,7 @@
 #import "BICloudRepositoryBuilder.h"
 #import "PFAnalytics.h"
 #import "Parse.h"
-#import "BICloudTripRepository.h"
+#import "BIParseTripRepository.h"
 
 
 @implementation BICloudRepositoryBuilder {}
@@ -17,7 +17,7 @@
 }
 
 - (id <BITripRepository>)newRepository {
-    return [[BICloudTripRepository alloc] init];
+    return [[BIParseTripRepository alloc] init];
 }
 
 

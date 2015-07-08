@@ -14,4 +14,8 @@
 */
 - (void)loadAllTripsMetadata:(void (^)(NSArray*, NSError *))responseBlock;
 
+@optional
+-(void) deleteTripForMetadata:(BITripMetadata *) metadata
+                responseBlock:(void(^)(BOOL succeeded, NSError *)) callback;
+
 @end

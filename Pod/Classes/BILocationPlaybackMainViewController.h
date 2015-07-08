@@ -9,7 +9,8 @@
 
 @interface BILocationPlaybackMainViewController : UIViewController <BITripsViewControllerProtocol, BILocationPlaybackPreviewViewControllerProtocol, BILocationRecordingViewControllerProtocol, BITripViewControllerProtocol>
 @property (nonatomic, weak) id<BILocationPlaybackMainViewControllerProtocol> delegate;
-- (void)showTripsViewController:(NSArray *)array;
+
+- (void)showTripsViewController:(NSArray *)trips allowDelete:(BOOL)allowDelete;
 
 @end
 
