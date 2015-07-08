@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "LocationPlayback"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "LocationPlayback should help you with recording and playback location of your device."
   s.description      = <<-DESC
                        LocationPlayback should help you with recording and playback location of your device. We are using that lib in Bright Inventions as it helps a lot with testing the location based apps.

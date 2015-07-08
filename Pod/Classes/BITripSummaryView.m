@@ -24,7 +24,7 @@
         UILabel *entriesCountLabel = [self createLabel];
         [self addSubview:entriesCountLabel];
         NSInteger locationEntriesCount = [[trip getEntries] count];
-        entriesCountLabel.text = [NSString stringWithFormat:@"Entries count: %d", locationEntriesCount];
+        entriesCountLabel.text = [NSString stringWithFormat:@"Entries count: %@", @(locationEntriesCount)];
 
         [entriesCountLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:tripNameLabel withOffset:VERTICAL_SPACING];
         [entriesCountLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
