@@ -31,6 +31,10 @@
     return _tripPlayback != nil;
 }
 
+-(BITrip *) getPlayedTrip {
+    return _tripPlayback != nil ? [_tripPlayback getTrip] : nil;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {

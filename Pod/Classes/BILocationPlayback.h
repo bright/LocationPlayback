@@ -16,6 +16,8 @@
 
 -(BOOL) isTripPlaybackPlaying;
 
+- (BITrip *)getPlayedTrip;
+
 + (BILocationPlayback *)instance;
 
 - (void)show;

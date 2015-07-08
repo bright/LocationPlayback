@@ -23,6 +23,7 @@
 
 - (void)loadView {
     [super loadView];
+    self.title = @"Trip Recording";
     self.view.backgroundColor = [UIColor whiteColor];
 
     _startRecordingButton = [BIStyles createButtonWithName:@"Start new ride"];

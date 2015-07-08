@@ -20,12 +20,12 @@
     UILabel *_speedLabel;
     UILabel *_longitudeLabel;
     UILabel *_latitudeLabel;
-    UIButton* _stopButton;
+    UIButton *_stopButton;
     BILocationPlayback *_locationPlayback;
 }
 - (instancetype)initWithTrip:(BITrip *)trip {
     self = [super init];
-    if(self){
+    if (self) {
         _trip = trip;
     }
     return self;
@@ -96,6 +96,15 @@
     _playButton.hidden = [_locationPlayback isTripPlaybackPlaying];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (_trip == [_locationPlayback getPlayedTrip]) {
+        [self turnPlaybackOnMode];
+    } else {
+        [self turnPlaybackOffMode];
+    }
+}
+
 - (void)stopAction {
     [self.delegate playbackPreviewVC:self tripPlaybackStopRequested:_trip];
 }
@@ -110,13 +119,23 @@
 }
 
 - (void)tripEnded:(NSNotification *)notification {
-    _playButton.hidden = NO;
-    _stopButton.hidden = YES;
+    [self turnPlaybackOffMode];
 }
 
 - (void)tripStarted:(NSNotification *)notification {
+    [self turnPlaybackOnMode];
+}
+
+- (void)turnPlaybackOnMode {
     _playButton.hidden = YES;
     _stopButton.hidden = NO;
+    self.navigationItem.hidesBackButton = YES;
+}
+
+- (void)turnPlaybackOffMode {
+    _playButton.hidden = NO;
+    _stopButton.hidden = YES;
+    self.navigationItem.hidesBackButton = NO;
 }
 
 - (void)tripUpdated:(NSNotification *)notification {

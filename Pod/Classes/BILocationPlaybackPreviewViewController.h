@@ -9,6 +9,7 @@
 @property (nonatomic, weak) id<BILocationPlaybackPreviewViewControllerProtocol> delegate;
 
 - (instancetype)initWithTrip:(BITrip *)trip;
+
 @end
 
 @protocol BILocationPlaybackPreviewViewControllerProtocol <NSObject>

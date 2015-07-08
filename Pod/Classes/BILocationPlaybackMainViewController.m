@@ -17,10 +17,25 @@
 #define BUTTON_HEIGHT 100
 #define VERTICAL_SPACING 20
 
-@implementation BILocationPlaybackMainViewController {}
+@implementation BILocationPlaybackMainViewController {
+    BOOL _shouldPopPreviewControllerOnTripStop;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _shouldPopPreviewControllerOnTripStop = NO;
+    if([[BILocationPlayback instance] isTripPlaybackPlaying]){
+        BITrip* trip = [[BILocationPlayback instance] getPlayedTrip];
+        BILocationPlaybackPreviewViewController *previewVC = [[BILocationPlaybackPreviewViewController alloc] initWithTrip:trip];
+        previewVC.delegate = self;
+        [self.navigationController pushViewController:previewVC animated:NO];
+        _shouldPopPreviewControllerOnTripStop = YES;
+    }
+}
 
 - (void)loadView {
     [super loadView];
+    self.title = @"Location Playback";
     self.view.backgroundColor = [UIColor whiteColor];
 
     UIButton *selectTripToPlayButton = [BIStyles createButtonWithName:@"Stored trips"];
@@ -110,6 +125,9 @@
 
 - (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStopRequested:(BITrip *)trip {
     [self.delegate userRequestedStopPlaybackOnTrip: trip];
+    if(_shouldPopPreviewControllerOnTripStop){
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 
