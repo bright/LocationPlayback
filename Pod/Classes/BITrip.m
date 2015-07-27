@@ -54,7 +54,9 @@
             BITripEntry *entry1 = _entries[(NSUInteger) i];
             BITripEntry *entry2 = trip->_entries[(NSUInteger) i];
             BOOL areEqual = [entry1 isEqualToEntry:entry2];
-            if (!areEqual) return NO;
+            if (!areEqual) {
+                return NO;
+            }
         }
     }
     if (_startDate != trip->_startDate && !((NSInteger) [_startDate timeIntervalSince1970] == (NSInteger) [trip->_startDate timeIntervalSince1970]))

@@ -6,11 +6,21 @@
 
 - (instancetype)initWithLocation:(CLLocation *)location;
 
+- (instancetype)initWithLocation:(CLLocation *)location acceleration:(NSNumber *)acceleration;
+
 -(NSDate *) getTimestamp;
 
 - (CLLocationCoordinate2D)getCoordinate;
 
+/**
+* Returns the speed of the location in m/s
+*/
 - (CGFloat)speed;
+
+/**
+* Returns acceleration in m/sec2, returns CGFLOAT_MIN if acceleration not defined
+*/
+-(NSNumber *)acceleration;
 
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary;
 
