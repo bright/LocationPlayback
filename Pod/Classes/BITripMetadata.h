@@ -3,9 +3,9 @@
 
 @interface BITripMetadata : NSObject <NSCoding>
 
-- (instancetype)initWithUrl:(NSURL *)url key:(NSString *)key name:(NSString *)name;
+- (instancetype)initWithUrl:(NSURL *)url key:(NSString *)key name:(NSString *)name startDate:(NSDate *)startDate;
 
-- (instancetype)initWithName:(NSString *)name;
+- (instancetype)initWithName:(NSString *)name startDate:(NSDate *)startDate;
 
 - (BOOL)isEqual:(id)other;
 
@@ -24,5 +24,7 @@
 - (void)encodeWithCoder:(NSCoder *)coder;
 
 - (NSString *)getName;
+
+- (NSDate *)getStartDate;
 
 @end

@@ -70,7 +70,9 @@
     NSUInteger hash = [[NSNumber numberWithDouble:self.coordinate2D.latitude] hash];
     hash = hash * 31u + [[NSNumber numberWithDouble:self.coordinate2D.longitude] hash];
     hash = hash * 31u + [[NSNumber numberWithDouble:self.speed] hash];
-    hash = hash * 31u + [self.acceleration hash];
+    if(self.acceleration){
+        hash = hash * 31u + [self.acceleration hash];
+    }
     hash = hash * 31u + [self.timestamp hash];
     return hash;
 }

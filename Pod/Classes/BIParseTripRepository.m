@@ -25,8 +25,7 @@
 
 - (void)storeTrip:(BITrip *)tripToStore responseBlock:(void (^)(BITripMetadata *, NSError *))responseBlock {
     NSString *serializedTrip = [_serializer serialize:tripToStore];
-    BITripMetadata *tripMetadata = [[BITripMetadata alloc] initWithName:[tripToStore getName]];
-
+    BITripMetadata *tripMetadata = [[BITripMetadata alloc] initWithName:[tripToStore getName] startDate:[tripToStore getStartDate]];
     PFObject *tripObject = [PFObject objectWithClassName:@"Trip"];
     tripObject[@"serialized"] = serializedTrip;
     tripObject[@"metadataKey"] = [tripMetadata getKey];

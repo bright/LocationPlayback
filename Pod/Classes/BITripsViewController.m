@@ -47,10 +47,17 @@
     static NSString *cellIdentifier = @"BISelectTripView_cellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
+    cell.detailTextLabel.text = @"";
     BITripMetadata *metadata = [self getMetadataForIndexPath:indexPath];
     cell.textLabel.text = [metadata getName];
+    if([metadata getStartDate]){
+        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+        dateFormatter.dateFormat = @"dd.MM.yy HH:mm:ss";
+        NSString *startDateString = [dateFormatter stringFromDate:[metadata getStartDate]];
+        cell.detailTextLabel.text = startDateString;
+    }
     return cell;
 }
 
