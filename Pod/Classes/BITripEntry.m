@@ -7,6 +7,7 @@
 @property(nonatomic) CGFloat speed;
 @property(nonatomic) NSNumber* acceleration;
 @property(nonatomic, strong) NSDate *timestamp;
+@property(nonatomic, strong) NSDate *locationTimestamp;
 
 @end
 
@@ -22,12 +23,17 @@
         self.coordinate2D = location.coordinate;
         self.speed = (CGFloat) location.speed;
         self.timestamp = [NSDate date];
+        self.locationTimestamp = location.timestamp;
         self.acceleration = acceleration;
     }
     return self;
 }
 
 - (NSDate *)getTimestamp {
+    return _timestamp;
+}
+
+- (NSDate *)getLocationTimestamp {
     return _timestamp;
 }
 
@@ -63,6 +69,8 @@
         return NO;
     if (self.timestamp != entry.timestamp && !((NSInteger)[self.timestamp timeIntervalSince1970] == (NSInteger)[entry.timestamp timeIntervalSince1970]))
         return NO;
+    if (self.locationTimestamp != entry.locationTimestamp && !((NSInteger)[self.locationTimestamp timeIntervalSince1970] == (NSInteger)[entry.locationTimestamp timeIntervalSince1970]))
+        return NO;
     return YES;
 }
 
@@ -74,6 +82,7 @@
         hash = hash * 31u + [self.acceleration hash];
     }
     hash = hash * 31u + [self.timestamp hash];
+    hash = hash * 31u + [self.locationTimestamp hash];
     return hash;
 }
 
@@ -83,7 +92,8 @@
             @"latitude": @(_coordinate2D.latitude),
             @"longitude": @(_coordinate2D.longitude),
             @"speed": @(_speed),
-            @"timestamp": [NSString stringDateFromDate:_timestamp]
+            @"timestamp": [NSString stringDateFromDate:_timestamp],
+            @"locationTimestamp": [NSString stringDateFromDate:_locationTimestamp]
     }];
     if(_acceleration != nil){
         dict[@"acceleration"] = _acceleration;
@@ -99,10 +109,15 @@
         CGFloat speed = [dictionary[@"speed"] floatValue];
         NSNumber* acceleration = dictionary[@"acceleration"];
         NSDate* timestamp = [dictionary[@"timestamp"] toDateFromStringDate];
+        NSDate* locationTimestamp = [timestamp copy];
+        if(dictionary[@"locationTimestamp"]){
+            locationTimestamp = [dictionary[@"locationTimestamp"] toDateFromStringDate];
+        }
         BITripEntry *entry = [[BITripEntry alloc] init];
         entry->_coordinate2D = CLLocationCoordinate2DMake(latitude, longitude);
         entry->_speed = speed;
         entry->_timestamp = timestamp;
+        entry->_locationTimestamp = locationTimestamp;
         entry->_acceleration = acceleration;
         return entry;
     }
