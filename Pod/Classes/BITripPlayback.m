@@ -65,7 +65,7 @@
         NSTimeInterval timeInterval = [[entry getTimestamp] timeIntervalSinceDate:_lastDate];
         if (timeInterval <= 0) {
 //            NSAssert(timeInterval > 0, @"time interval should be greater than 0, but was: %@", @(timeInterval));
-            timeInterval = 0.1;
+            timeInterval = 0.001;
         }
 
         [self performSelector:@selector(_play) withObject:nil afterDelay:timeInterval];

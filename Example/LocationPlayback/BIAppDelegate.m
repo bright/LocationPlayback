@@ -6,18 +6,20 @@
 //  Copyright (c) 2014 Daniel Makurat. All rights reserved.
 //
 
-#import "BIParseTripRepository.h"
-#import <LocationPlayback/BICloudRepositoryBuilder.h>
+#import "BIRegistryWithCloudRepository.h"
+#import <LocationPlayback/BITripPlayback.h>
+#import <LocationPlayback/BILocationPlaybackMainViewController.h>
 #import <LocationPlayback/BILocationPlayback.h>
 #import <LocationPlayback/BILocationPlaybackConfiguration.h>
+#import <LocationPlayback/BIRegistryWithCloudRepository.h>
 #import "BIAppDelegate.h"
 
 @implementation BIAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    BICloudRepositoryBuilder* repositoryBuilder = [[BICloudRepositoryBuilder alloc] initWithApplicationId:@"zwWNbqiQCuKo3hIKfnHPzIJfWgs2OjmyQSWijHlf" clientKey:@"yp7XjY1WvJnPRJNcg9ukAGODnqZUCeshLVCJvSQs"];
-    [[[BILocationPlayback instance] getConfiguration] setTripRepositoriesBuilder: repositoryBuilder];
+    BIRegistryWithCloudRepository * repositoryBuilder = [[BIRegistryWithCloudRepository alloc] initWithApplicationId:@"zwWNbqiQCuKo3hIKfnHPzIJfWgs2OjmyQSWijHlf" clientKey:@"yp7XjY1WvJnPRJNcg9ukAGODnqZUCeshLVCJvSQs"];
+    [[[BILocationPlayback instance] getConfiguration] setRegistry:repositoryBuilder];
     return YES;
 }
 							

@@ -1,30 +1,30 @@
 #import "BILocationPlaybackConfiguration.h"
 #import "BITripRepository.h"
 #import "BITripLocalRepository.h"
-#import "BITripRepositoryBuilder.h"
-#import "BILocalRepositoryBuilder.h"
+#import "BILocationPlaybackRegistry.h"
+#import "BIRegistryWithLocalRepository.h"
 
 
 @implementation BILocationPlaybackConfiguration {
-    id<BITripRepositoryBuilder> _repositoryBuilder;
+    id<BILocationPlaybackRegistry> _registry;
 }
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _repositoryBuilder = [[BILocalRepositoryBuilder alloc] init];
+        _registry = [[BIRegistryWithLocalRepository alloc] init];
         _previewSize = CGSizeMake(200, 200);
     }
 
     return self;
 }
 
--(void) setTripRepositoriesBuilder:(id<BITripRepositoryBuilder>) repositoryBuilder {
-    _repositoryBuilder = repositoryBuilder;
+-(void)setRegistry:(id<BILocationPlaybackRegistry>)registry {
+    _registry = registry;
 }
 
-- (id <BITripRepository>)createStorage {
-    return [_repositoryBuilder newRepository];
+-(id<BILocationPlaybackRegistry>) getRegistry {
+    return _registry;
 }
 
 @end

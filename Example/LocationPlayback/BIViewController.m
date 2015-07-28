@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Daniel Makurat. All rights reserved.
 //
 
-#import <LocationPlayback/BITripRecorder.h>
+#import "BISimpleTripRecorder.h"
 #import <LocationPlayback/BITripPlayback.h>
 #import <LocationPlayback/BITripRecordingPreview.h>
 #import <LocationPlayback/BITripPlaybackPreview.h>

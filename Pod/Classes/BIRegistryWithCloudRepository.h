@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
-#import "BITripRepositoryBuilder.h"
+#import "BILocationPlaybackRegistry.h"
 
-@interface BICloudRepositoryBuilder : NSObject<BITripRepositoryBuilder>
+@interface BIRegistryWithCloudRepository : NSObject<BILocationPlaybackRegistry>
 
 - (instancetype)initWithApplicationId:(NSString *)applicationId clientKey:(NSString *)clientKey;
 

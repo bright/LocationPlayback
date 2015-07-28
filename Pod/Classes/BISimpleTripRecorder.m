@@ -1,11 +1,12 @@
-#import "BITripRecorder.h"
+#import "BISimpleTripRecorder.h"
 #import "BITrip.h"
 #import "BITripEntry.h"
+#import "BITripRecorder.h"
 
 @import CoreLocation;
 
 
-@implementation BITripRecorder {
+@implementation BISimpleTripRecorder {
     CLLocationManager *_locationManager;
     NSMutableArray *_tripEntries;
     NSDate *_startDate;

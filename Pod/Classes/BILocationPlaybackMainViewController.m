@@ -12,6 +12,7 @@
 #import "BITripViewController.h"
 #import "BIStyles.h"
 #import "ALView+PureLayout.h"
+#import "BILocationPlaybackRegistry.h"
 
 #define LEFT_RIGHT_INSET 20
 #define BUTTON_HEIGHT 100
@@ -67,12 +68,12 @@
 }
 
 - (void)_selectTripToPlay {
-    id <BITripRepository> storage = [[[BILocationPlayback instance] getConfiguration] createStorage];
+    id <BITripRepository> tripsRepository = [self createStorage];
     __weak BILocationPlaybackMainViewController *weakSelf = self;
-    [storage loadAllTripsMetadata:^(NSArray *tripsMetadata, NSError *error) {
+    [tripsRepository loadAllTripsMetadata:^(NSArray *tripsMetadata, NSError *error) {
         BILocationPlaybackMainViewController *strongSelf = weakSelf;
         if (error == nil) {
-            BOOL allowDelete = [storage respondsToSelector:@selector(deleteTripForMetadata:responseBlock:)];
+            BOOL allowDelete = [tripsRepository respondsToSelector:@selector(deleteTripForMetadata:responseBlock:)];
             [strongSelf showTripsViewController:tripsMetadata allowDelete:allowDelete];
         }
     }];
@@ -106,7 +107,7 @@
 }
 
 - (id <BITripRepository>)createStorage {
-    return [[[BILocationPlayback instance] getConfiguration] createStorage];
+    return [[[[BILocationPlayback instance] getConfiguration] getRegistry] newRepository];
 }
 
 - (void)tripsViewController:(BITripsViewController *)controller onTripDeleted:(BITripMetadata *)metadata {

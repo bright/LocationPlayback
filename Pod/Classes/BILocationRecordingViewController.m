@@ -1,8 +1,14 @@
 #import "BILocationRecordingViewController.h"
+#import "BITripRecorder.h"
 #import "BITripRecordingPreview.h"
 #import "BITrip.h"
 #import "ALView+PureLayout.h"
 #import "BIStyles.h"
+#import "BITripPlayback.h"
+#import "BILocationPlaybackMainViewController.h"
+#import "BILocationPlayback.h"
+#import "BILocationPlaybackConfiguration.h"
+#import "BILocationPlaybackRegistry.h"
 
 #define LEFT_RIGHT_INSET 20
 #define BUTTON_HEIGHT 75
@@ -15,7 +21,7 @@
     UIButton *_stopRecordingButton;
     UIButton *_saveTripButton;
     UIButton *_discardTripButton;
-    BITripRecorder *_tripRecorder;
+    id<BITripRecorder>_tripRecorder;
     BITripRecordingPreview *_recordingPreview;
     BITrip *_trip;
     UITextField *_rideNameTextField;
@@ -87,14 +93,13 @@
 
 - (void)_startRecording {
     [_recordingPreview removeFromSuperview];
-
-    _tripRecorder = [[BITripRecorder alloc] initWithTripName:_rideNameTextField.text];
+    id <BILocationPlaybackRegistry> registry = [[[BILocationPlayback instance] getConfiguration] getRegistry];
+    _tripRecorder = [registry newRecorderWithTripName:_rideNameTextField.text];
     [self showRecordingPreviewForRecorder: _tripRecorder];
     [_tripRecorder start];
     _stopRecordingButton.hidden = NO;
     _startRecordingButton.hidden = YES;
     _rideNameTextField.enabled = NO;
-
 }
 
 - (void)discardTrip {
@@ -114,7 +119,7 @@
     _rideNameTextField.enabled = YES;
 }
 
-- (void)showRecordingPreviewForRecorder:(BITripRecorder *) tripRecorder {
+- (void)showRecordingPreviewForRecorder:(id<BITripRecorder>) tripRecorder {
     _recordingPreview = [[BITripRecordingPreview alloc] initWithTripRecorder:tripRecorder];
     [_recordingPreview clearAnnotations];
     [self.view addSubview:_recordingPreview];
@@ -124,13 +129,8 @@
     [_recordingPreview autoPinEdgeToSuperviewEdge:ALEdgeRight];
 }
 
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
 }
-
-
-
-
 @end

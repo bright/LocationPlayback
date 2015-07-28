@@ -1,17 +1,17 @@
 PODS:
   - Bolts/Tasks (1.2.0)
-  - Expecta (1.0.0)
+  - Expecta (1.0.2)
   - Expecta+Snapshots (1.3.4):
     - Expecta (~> 1.0)
     - FBSnapshotTestCase (~> 1.8)
   - FBSnapshotTestCase (1.8.1)
-  - LocationPlayback (0.1.0):
+  - LocationPlayback (0.2.0):
     - Parse (~> 1.7.4)
     - PureLayout (~> 2.0.6)
-  - Parse (1.7.5):
+  - Parse (1.7.5.3):
     - Bolts/Tasks (>= 1.2.0)
   - PureLayout (2.0.6)
-  - Specta (1.0.2)
+  - Specta (1.0.3)
 
 DEPENDENCIES:
   - Expecta
@@ -26,12 +26,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
-  Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
+  Expecta: 54e8a3530add08f4f0208c111355eda7cde74a53
   Expecta+Snapshots: ca15bfb57e7a0f78f86c7699c2c54ffacfa4ad2a
   FBSnapshotTestCase: 3dc3899168747a0319c5278f5b3445c13a6532dd
-  LocationPlayback: 88b63ba1283d8896a9cdc89738cfa6e8df301ec7
-  Parse: 7c0f115eff3e0cea3fac08d50bda47154edb8832
+  LocationPlayback: 1adaa4f2445b8011f0c142f6d280360e15dc7520
+  Parse: 373adbb1ad2e34d383542c3b28f678c49ebe4881
   PureLayout: f25f0bb904d5ccfe6e31da3cb869185259f02e0d
-  Specta: 9cec98310dca411f7c7ffd6943552b501622abfe
+  Specta: cf3e4188cf35375c3ee2cd03f8db8f1f4ef98234
 
 COCOAPODS: 0.37.2

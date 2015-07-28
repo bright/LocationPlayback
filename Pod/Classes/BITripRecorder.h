@@ -1,12 +1,10 @@
 #import <Foundation/Foundation.h>
 
-@import CoreLocation;
-@protocol CLLocationManagerDelegate;
 @class BITrip;
 @protocol BITripRecorderProtocol;
 @class BITripEntry;
 
-@interface BITripRecorder : NSObject <CLLocationManagerDelegate>
+@protocol BITripRecorder <NSObject>
 
 @property(nonatomic, weak) id <BITripRecorderProtocol> delegate;
 
@@ -19,10 +17,13 @@
 @end
 
 @protocol BITripRecorderProtocol <NSObject>
+
 @optional
-- (void)tripRecorder:(BITripRecorder *)recorder didRecordTripEntry:(BITripEntry *)entry;
 
-- (void)tripRecorderDidStartRecording:(BITripRecorder *)recorder;
+- (void)tripRecorder:(id<BITripRecorder>)recorder didRecordTripEntry:(BITripEntry *)entry;
 
-- (void)tripRecorder:(BITripRecorder *)recorder didStopRecordingTrip:(BITrip *)recorderTrip;
+- (void)tripRecorderDidStartRecording:(id<BITripRecorder>)recorder;
+
+- (void)tripRecorder:(id<BITripRecorder>)recorder didStopRecordingTrip:(BITrip *)recorderTrip;
+
 @end
