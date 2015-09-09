@@ -19,6 +19,7 @@
 
 -(BITrip *) getTrip;
 
+- (void)setTolerance:(NSTimeInterval)tolerance;
 @end
 
 @protocol BITripPlaybackProtocol <NSObject>

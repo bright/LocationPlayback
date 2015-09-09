@@ -22,6 +22,9 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		C5892327703315A42AF793F3 /* BITripPlaybackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C58923B5D1F36911A228A385 /* BITripPlaybackTests.m */; };
+		C58928ADCEFD59B7946562E4 /* BIPlaybackPlayedEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = C5892CCA42AC7CBE3515DF4A /* BIPlaybackPlayedEntry.m */; };
+		C58929EA0DEC7A8DAD5B0737 /* BIFakePlaybackProtocolImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = C5892F3555137A758BB9F1D7 /* BIFakePlaybackProtocolImplementation.m */; };
 		C5892DD603372EA843C5499B /* BITripSerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C589234C6E3109B363129401 /* BITripSerializerTests.m */; };
 		C5892E32A88B24D11CB208DF /* BITripLocalRepositoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C5892E898F276FACDDAE9B90 /* BITripLocalRepositoryTests.m */; };
 /* End PBXBuildFile section */
@@ -63,8 +66,13 @@
 		810690021032F91C2C932042 /* Pods-LocationPlayback_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationPlayback_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocationPlayback_Tests/Pods-LocationPlayback_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BD7D6905DEC05C48C79455FE /* Pods-LocationPlayback_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationPlayback_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocationPlayback_Example/Pods-LocationPlayback_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		C589222A70DD755DC2BA7F9F /* BIPlaybackPlayedEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIPlaybackPlayedEntry.h; sourceTree = "<group>"; };
 		C589234C6E3109B363129401 /* BITripSerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BITripSerializerTests.m; sourceTree = "<group>"; };
+		C58923B5D1F36911A228A385 /* BITripPlaybackTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BITripPlaybackTests.m; sourceTree = "<group>"; };
+		C589294BEF7E90D64C1B5514 /* BIFakePlaybackProtocolImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIFakePlaybackProtocolImplementation.h; sourceTree = "<group>"; };
+		C5892CCA42AC7CBE3515DF4A /* BIPlaybackPlayedEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIPlaybackPlayedEntry.m; sourceTree = "<group>"; };
 		C5892E898F276FACDDAE9B90 /* BITripLocalRepositoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BITripLocalRepositoryTests.m; sourceTree = "<group>"; };
+		C5892F3555137A758BB9F1D7 /* BIFakePlaybackProtocolImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BIFakePlaybackProtocolImplementation.m; sourceTree = "<group>"; };
 		D38B3ABD90AD1F9DC7494FFD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		EC3F1FE6FAB9ADA07EDC685D /* Pods-LocationPlayback_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationPlayback_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocationPlayback_Tests/Pods-LocationPlayback_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -172,6 +180,8 @@
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				C589234C6E3109B363129401 /* BITripSerializerTests.m */,
 				C5892E898F276FACDDAE9B90 /* BITripLocalRepositoryTests.m */,
+				C58923B5D1F36911A228A385 /* BITripPlaybackTests.m */,
+				C58927BC57503CDAF10C0013 /* Helpres */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -194,6 +204,17 @@
 				30AE6705EC17A7B425C6231F /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		C58927BC57503CDAF10C0013 /* Helpres */ = {
+			isa = PBXGroup;
+			children = (
+				C5892F3555137A758BB9F1D7 /* BIFakePlaybackProtocolImplementation.m */,
+				C589294BEF7E90D64C1B5514 /* BIFakePlaybackProtocolImplementation.h */,
+				C5892CCA42AC7CBE3515DF4A /* BIPlaybackPlayedEntry.m */,
+				C589222A70DD755DC2BA7F9F /* BIPlaybackPlayedEntry.h */,
+			);
+			path = Helpres;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,6 +426,9 @@
 			files = (
 				C5892DD603372EA843C5499B /* BITripSerializerTests.m in Sources */,
 				C5892E32A88B24D11CB208DF /* BITripLocalRepositoryTests.m in Sources */,
+				C5892327703315A42AF793F3 /* BITripPlaybackTests.m in Sources */,
+				C58929EA0DEC7A8DAD5B0737 /* BIFakePlaybackProtocolImplementation.m in Sources */,
+				C58928ADCEFD59B7946562E4 /* BIPlaybackPlayedEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

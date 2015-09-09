@@ -5,13 +5,14 @@
 
 @implementation BITripPlayback {
     BITrip *_trip;
-    NSTimer *_timer;
     NSDate *_lastDate;
     NSDate *_startDate;
     NSArray *_tripEntries;
     NSEnumerator *_entriesEnumerator;
     BITripEntry *_entryToPlay;
     BOOL _play;
+    NSTimer *_timer;
+    double _tolerance;
 }
 
 - (instancetype)initWithTrip:(BITrip *)trip {
@@ -21,6 +22,7 @@
         _startDate = [trip getStartDate];
         _lastDate = _startDate;
         _tripEntries = [trip getEntries];
+        _tolerance = 0.01;
     }
     return self;
 }
@@ -42,7 +44,6 @@
         [self endTrip];
     }
     _entriesEnumerator = [_tripEntries objectEnumerator];
-
     [self _play];
 }
 
@@ -50,10 +51,13 @@
     return _trip;
 }
 
+- (void)setTolerance:(NSTimeInterval)tolerance {
+    _tolerance = tolerance;
+}
+
 - (void)_play {
     if (!_play) return;
     if (_entryToPlay != nil) {
-        NSLog(@"play: entry: %@", [_entryToPlay debugDescription]);
         [self.delegate tripPlayback:self playEntry:_entryToPlay];
         _entryToPlay = nil;
     }
@@ -64,13 +68,13 @@
         _entryToPlay = entry;
         NSTimeInterval timeInterval = [[entry getTimestamp] timeIntervalSinceDate:_lastDate];
         if (timeInterval <= 0) {
-//            NSAssert(timeInterval > 0, @"time interval should be greater than 0, but was: %@", @(timeInterval));
             timeInterval = 0.001;
         }
-
-        [self performSelector:@selector(_play) withObject:nil afterDelay:timeInterval];
+        [_timer invalidate];
+        _timer = [NSTimer timerWithTimeInterval:timeInterval target:self selector:@selector(_play) userInfo:nil repeats:NO];
+        [_timer setTolerance:_tolerance];
+        [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSDefaultRunLoopMode];
         _lastDate = [entry getTimestamp];
-        [_timer fire];
     }
 }
 

@@ -6,6 +6,8 @@
 
 - (instancetype)initWithLocation:(CLLocation *)location;
 
+- (instancetype)initWithLocation:(CLLocation *)location timestamp:(NSDate *)timestamp acceleration:(NSNumber *)acceleration;
+
 - (instancetype)initWithLocation:(CLLocation *)location acceleration:(NSNumber *)acceleration;
 
 -(NSDate *) getTimestamp;

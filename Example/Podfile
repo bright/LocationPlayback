@@ -9,8 +9,9 @@ end
 target 'LocationPlayback_Tests', :exclusive => true do
   pod "LocationPlayback", :path => "../"
 
-  pod 'Specta'
-  pod 'Expecta'
+  pod 'Specta', '1.0.3'
+  pod 'Expecta', '1.0.2'
   pod 'FBSnapshotTestCase'
   pod 'Expecta+Snapshots'
+  pod 'OCMock', '3.1.5'
 end
