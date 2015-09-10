@@ -17,12 +17,17 @@ SpecBegin(BITripPlaybackTests)
             return [[BITripEntry alloc] initWithLocation:location timestamp:location.timestamp acceleration:@(1)];
         };
 
-        void(^assertPlayedCorrectly)(BIPlaybackPlayedEntry *, BITripEntry *, NSTimeInterval) = ^(BIPlaybackPlayedEntry *playedEntry, BITripEntry *entry, NSTimeInterval timeInterval){
-            NSTimeInterval diff = ABS([[playedEntry playedAt] timeIntervalSince1970] - [[entry getTimestamp] timeIntervalSince1970]);
-            XCTAssert( diff < timeInterval , @"entry was not played at correct date, diff is:%@ expected:%@", @(diff), @(timeInterval));
+        void(^assertPlayedCorrectly)(BITripPlayback *,BIPlaybackPlayedEntry *, BITripEntry *) = ^(BITripPlayback *playback,BIPlaybackPlayedEntry *playedEntry, BITripEntry *entry){
+            NSDate *playbackStartedDate = [playback getPlaybackStartedDate];
+            NSDate *tripStartedDate = [[playback getTrip] getStartDate];
+            NSTimeInterval diffInRealTrip = [[entry getTimestamp] timeIntervalSinceDate:tripStartedDate];
+            NSTimeInterval diffInPlayback = [[playedEntry playedAt] timeIntervalSinceDate:playbackStartedDate];
+
+            NSTimeInterval diff = ABS(diffInPlayback*([playback getSpeedMultiplier]) - diffInRealTrip);
+            XCTAssert( diff < [playback getTolerance], @"entry was not played at correct date, diff is:%@ expected:%@", @(diff), @([playback getTolerance]));
         };
 
-        void (^doTestWithTimeIntervals_EndInterval_Tolerance)(NSArray *, NSTimeInterval, NSTimeInterval) = ^(NSArray *timeIntervals, NSTimeInterval tripEndInterval, NSTimeInterval tolerance){
+        void (^doTestWithTimeIntervals_EndInterval_Tolerance_SpeedMultiplier)(NSArray *, NSTimeInterval, NSTimeInterval, double) = ^(NSArray *timeIntervals, NSTimeInterval tripEndInterval, NSTimeInterval tolerance, double speedMultiplier){
             BIFakePlaybackProtocolImplementation *protocolImplementation = [BIFakePlaybackProtocolImplementation new];
             NSDate *startDate = [NSDate date];
             NSDate *endDate = [NSDate dateWithTimeInterval:tripEndInterval sinceDate:startDate];
@@ -31,15 +36,15 @@ SpecBegin(BITripPlaybackTests)
                 BITripEntry *entry = createTripEntryForLocation(createLocationWithTimeIntervalSinceStartDate([timeInterval doubleValue], startDate));
                 [entries addObject:entry];
             }
-
             BITrip *trip = [[BITrip alloc] initWithStartDate:startDate
                                                      endDate:endDate
                                                      entries:entries
                                                         name:@"test trip"];
             BITripPlayback *sut = [[BITripPlayback alloc] initWithTrip:trip];
+            [sut setSpeedMultiplier: speedMultiplier];
             [sut setTolerance:tolerance];
             sut.delegate = protocolImplementation;
-            waitUntilTimeout(tripEndInterval + 1,^(DoneCallback done) {
+            waitUntilTimeout(tripEndInterval + (1.0/speedMultiplier),^(DoneCallback done) {
                 [sut play];
                 protocolImplementation.onTripEnded = ^{
                     NSArray *playedEntries = [protocolImplementation playedEntries];
@@ -49,11 +54,15 @@ SpecBegin(BITripPlaybackTests)
                         BITripEntry *entry = entries[i];
                         BIPlaybackPlayedEntry* playedPlaybackEntry = playedEntries[i];
                         XCTAssertEqual(entry, [playedPlaybackEntry playedEntry]);
-                        assertPlayedCorrectly(playedPlaybackEntry, entry, tolerance);
+                        assertPlayedCorrectly(sut, playedPlaybackEntry, entry);
                     }
                     done();
                 };
             });
+        };
+
+        void (^doTestWithTimeIntervals_EndInterval_Tolerance)(NSArray *, NSTimeInterval, NSTimeInterval) = ^(NSArray *timeIntervals, NSTimeInterval tripEndInterval, NSTimeInterval tolerance){
+            doTestWithTimeIntervals_EndInterval_Tolerance_SpeedMultiplier(timeIntervals, tripEndInterval, tolerance, 1);
         };
 
         it(@"test with 5 entries distributed withing 0.05 sec with tolerance 0.1", ^{
@@ -64,12 +73,28 @@ SpecBegin(BITripPlaybackTests)
             );
         });
         
-        it(@"test for 100 trip entries distributed in 10 second with tolerance 0.1", ^{
+        it(@"test for 100 trip entries distributed in 10 second with tolerance 0.01", ^{
             NSMutableArray *entries = [NSMutableArray new];
             for (NSUInteger i = 0; i < 100; i++){
                 [entries addObject:@(i*0.1)];
             }
-            doTestWithTimeIntervals_EndInterval_Tolerance(entries, 11, 0.1);
+            doTestWithTimeIntervals_EndInterval_Tolerance(entries, 11, 0.01);
+        });
+
+        it(@"test for 100 trip entries distributed in 1 second with tolerance 0.01", ^{
+            NSMutableArray *entries = [NSMutableArray new];
+            for (NSUInteger i = 0; i < 100; i++){
+                [entries addObject:@(i*0.01)];
+            }
+            doTestWithTimeIntervals_EndInterval_Tolerance(entries, 1.1, 0.01);
+        });
+
+        it(@"test for 10 trip entries distributed in 10 second with tolerance 0.05 with speed x10", ^{
+            NSMutableArray *entries = [NSMutableArray new];
+            for (NSUInteger i = 0; i < 10; i++){
+                [entries addObject:@(i*1)];
+            }
+            doTestWithTimeIntervals_EndInterval_Tolerance_SpeedMultiplier(entries, 1.1, 0.05, 10);
         });
 
     });

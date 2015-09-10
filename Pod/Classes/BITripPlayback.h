@@ -20,6 +20,14 @@
 -(BITrip *) getTrip;
 
 - (void)setTolerance:(NSTimeInterval)tolerance;
+
+- (void)setSpeedMultiplier:(double)multiplier;
+
+- (double)getSpeedMultiplier;
+
+- (NSDate *)getPlaybackStartedDate;
+
+- (NSTimeInterval)getTolerance;
 @end
 
 @protocol BITripPlaybackProtocol <NSObject>
