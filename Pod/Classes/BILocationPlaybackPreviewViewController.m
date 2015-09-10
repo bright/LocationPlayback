@@ -22,6 +22,7 @@
     UILabel *_latitudeLabel;
     UIButton *_stopButton;
     BILocationPlayback *_locationPlayback;
+    UITextField *_speedMultiplier;
 }
 - (instancetype)initWithTrip:(BITrip *)trip {
     self = [super init];
@@ -57,6 +58,16 @@
     [_playButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:LEFT_RIGHT_INSET];
     [_playButton autoSetDimension:ALDimensionHeight toSize:BUTTON_HEIGHT];
 
+    _speedMultiplier = [[UITextField alloc] init];
+    _speedMultiplier.text = @"1";
+    _speedMultiplier.placeholder = @"Speed multiplier";
+    [self.view addSubview:_speedMultiplier];
+
+    [_speedMultiplier autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_playButton];
+    [_speedMultiplier autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:_playButton];
+    [_speedMultiplier autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:_playButton];
+    [_speedMultiplier autoSetDimension:ALDimensionHeight toSize:40];
+
     _stopButton = [BIStyles createButtonWithName:@"Stop"];
     [_stopButton addTarget:self action:@selector(stopAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_stopButton];
@@ -70,7 +81,7 @@
     _speedLabel.text = @"Speed: ";
     [self.view addSubview:_speedLabel];
 
-    [_speedLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_playButton withOffset:VERTICAL_SPACING];
+    [_speedLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_speedMultiplier withOffset:VERTICAL_SPACING];
     [_speedLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
 
     _longitudeLabel = [UILabel new];
@@ -96,6 +107,16 @@
     _playButton.hidden = [_locationPlayback isTripPlaybackPlaying];
 }
 
+-(double) getSpeedMultiplier {
+    @try{
+        double speedMultiplier = [_speedMultiplier.text doubleValue];
+        return speedMultiplier == 0 ? 1 : speedMultiplier;
+    }@catch (NSException *e){
+
+    }
+    return 1;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (_trip == [_locationPlayback getPlayedTrip]) {
@@ -115,7 +136,7 @@
 }
 
 - (void)playAction {
-    [self.delegate playbackPreviewVC:self tripPlaybackStartRequested:_trip];
+    [self.delegate playbackPreviewVC:self tripPlaybackStartRequested:_trip withSpeedMultiplier:[self getSpeedMultiplier]];
 }
 
 - (void)tripEnded:(NSNotification *)notification {

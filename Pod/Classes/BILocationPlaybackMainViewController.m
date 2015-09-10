@@ -133,8 +133,8 @@
     [self.navigationController pushViewController:previewVC animated:YES];
 }
 
-- (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStartRequested:(BITrip *)trip {
-    [self.delegate userRequestedTripPlaybackOnTrip:trip];
+- (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStartRequested:(BITrip *)trip withSpeedMultiplier:(double)multiplier {
+    [self.delegate userRequestedTripPlaybackOnTrip:trip withSpeedMultiplier: multiplier];
 }
 
 - (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStopRequested:(BITrip *)trip {

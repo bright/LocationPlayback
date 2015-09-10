@@ -93,8 +93,9 @@
     return _configuration;
 }
 
-- (void)userRequestedTripPlaybackOnTrip:(BITrip *)trip {
+- (void)userRequestedTripPlaybackOnTrip:(BITrip *)trip withSpeedMultiplier:(double)multiplier {
     _tripPlayback = [[BITripPlayback alloc] initWithTrip:trip];
+    [_tripPlayback setSpeedMultiplier:multiplier];
     _tripPlayback.delegate = self;
     [_tripPlayback play];
 }
