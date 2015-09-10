@@ -31,6 +31,13 @@
     return _tripPlayback != nil;
 }
 
+-(NSDate *) getTripDate {
+    if ([self isTripPlaybackPlaying]){
+        return [_tripPlayback tripDate];
+    }
+    return nil;
+}
+
 -(BITrip *) getPlayedTrip {
     return _tripPlayback != nil ? [_tripPlayback getTrip] : nil;
 }

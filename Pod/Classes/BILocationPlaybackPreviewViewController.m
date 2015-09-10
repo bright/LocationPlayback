@@ -7,14 +7,13 @@
 #import "BIStyles.h"
 #import "BILocationPlayback.h"
 
-#define VERTICAL_SPACING 20
+#define VERTICAL_SPACING 10
 #define LEFT_RIGHT_INSET 20
 #define BUTTON_HEIGHT 75
 #define PREVIEW_HEIGHT 150
 
 @implementation BILocationPlaybackPreviewViewController {
     BITrip *_trip;
-    BITripPlayback *_playback;
     BITripPlaybackPreview *_playbackPreview;
     UIButton *_playButton;
     UILabel *_speedLabel;
@@ -23,6 +22,7 @@
     UIButton *_stopButton;
     BILocationPlayback *_locationPlayback;
     UITextField *_speedMultiplier;
+    UILabel *_dateLabel;
 }
 - (instancetype)initWithTrip:(BITrip *)trip {
     self = [super init];
@@ -80,7 +80,6 @@
     _speedLabel = [UILabel new];
     _speedLabel.text = @"Speed: ";
     [self.view addSubview:_speedLabel];
-
     [_speedLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_speedMultiplier withOffset:VERTICAL_SPACING];
     [_speedLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
 
@@ -98,6 +97,13 @@
     [_latitudeLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_longitudeLabel withOffset:VERTICAL_SPACING];
     [_latitudeLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
 
+    _dateLabel = [UILabel new];
+    _dateLabel.text = @"Date: ";
+    [self.view addSubview:_dateLabel];
+
+    [_dateLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_latitudeLabel withOffset:VERTICAL_SPACING];
+    [_dateLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
+
     _locationPlayback = [BILocationPlayback instance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tripUpdated:) name:[_locationPlayback tripUpdateNotification] object:_locationPlayback];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tripStarted:) name:[_locationPlayback tripStartedNotification] object:_locationPlayback];
@@ -107,11 +113,11 @@
     _playButton.hidden = [_locationPlayback isTripPlaybackPlaying];
 }
 
--(double) getSpeedMultiplier {
-    @try{
+- (double)getSpeedMultiplier {
+    @try {
         double speedMultiplier = [_speedMultiplier.text doubleValue];
         return speedMultiplier == 0 ? 1 : speedMultiplier;
-    }@catch (NSException *e){
+    } @catch (NSException *e) {
 
     }
     return 1;
@@ -164,6 +170,7 @@
     _speedLabel.text = [NSString stringWithFormat:@"Speed: %.02f", entry.speed];
     _longitudeLabel.text = [NSString stringWithFormat:@"Longitude: %f", entry.getCoordinate.longitude];
     _latitudeLabel.text = [NSString stringWithFormat:@"Latitude: %f", entry.getCoordinate.latitude];
+    _dateLabel.text = [NSString stringWithFormat:@"Date: %@", [[_locationPlayback getTripDate] description]];
 }
 
 - (void)dealloc {

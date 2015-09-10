@@ -28,6 +28,8 @@
 - (NSDate *)getPlaybackStartedDate;
 
 - (NSTimeInterval)getTolerance;
+
+- (NSDate *)tripDate;
 @end
 
 @protocol BITripPlaybackProtocol <NSObject>

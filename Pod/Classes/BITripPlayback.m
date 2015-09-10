@@ -100,4 +100,11 @@
 -(NSTimeInterval) getTolerance {
     return _tolerance;
 }
+
+-(NSDate *) tripDate {
+    NSTimeInterval playbackInterval = [[NSDate date] timeIntervalSinceDate:_startPlaybackDate]*_speedMultiplier;
+    NSDate *tripDate = [_tripStartedDate dateByAddingTimeInterval:playbackInterval];
+    return tripDate;
+}
+
 @end
