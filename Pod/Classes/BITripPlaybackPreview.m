@@ -10,6 +10,8 @@
     MKMapView *_mapView;
     NSMutableArray *_annotations;
     BILocationPlayback *_locationPlayback;
+    MKPointAnnotation *_lastAnnotation;
+    NSTimer *_everySecondTimer;
 }
 
 - (instancetype)init {
@@ -28,15 +30,33 @@
 }
 
 - (void)tripEnded:(NSNotification *)notification {
-
+    [_everySecondTimer invalidate];
+    _everySecondTimer = nil;
 }
 
 - (void)tripStarted:(NSNotification *)notification {
+    [self removeAllAnnotations];
+    [self startEverySecondTimer];
+}
+
+- (void)startEverySecondTimer {
+    [_everySecondTimer invalidate];
+    _everySecondTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(everySecond) userInfo:nil repeats:YES];
+}
+
+- (void)everySecond {
+    [self showLastAnnotation];
+}
+
+- (void)removeAllAnnotations {
     [_mapView removeAnnotations:_annotations];
     [_annotations removeAllObjects];
 }
 
 - (void)tripUpdated:(NSNotification *)notification {
+    if (_everySecondTimer == nil){
+        [self startEverySecondTimer];
+    }
     BITripEntry *entry = [_locationPlayback getTripEntryFromUserInfo:notification.userInfo];
     [self onMapMarkTripEntry:entry];
 }
@@ -45,7 +65,14 @@
     MKPointAnnotation *myAnnotation = [[MKPointAnnotation alloc] init];
     myAnnotation.coordinate = [entry getCoordinate];
     [_annotations addObject:myAnnotation];
-    [_mapView showAnnotations:@[myAnnotation] animated:YES];
+    [_mapView addAnnotation:myAnnotation];
+    _lastAnnotation = myAnnotation;
+}
+
+- (void)showLastAnnotation {
+    if (_lastAnnotation){
+        [_mapView showAnnotations:@[_lastAnnotation] animated:YES];
+    }
 }
 
 - (void)dealloc {
