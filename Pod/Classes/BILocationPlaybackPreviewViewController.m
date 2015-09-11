@@ -21,8 +21,9 @@
     UILabel *_latitudeLabel;
     UIButton *_stopButton;
     BILocationPlayback *_locationPlayback;
-    UITextField *_speedMultiplier;
+    UILabel *_speedMultiplierLabel;
     UILabel *_dateLabel;
+    UISlider *_speedMultiplierSlider;
 }
 - (instancetype)initWithTrip:(BITrip *)trip {
     self = [super init];
@@ -58,16 +59,6 @@
     [_playButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:LEFT_RIGHT_INSET];
     [_playButton autoSetDimension:ALDimensionHeight toSize:BUTTON_HEIGHT];
 
-    _speedMultiplier = [[UITextField alloc] init];
-    _speedMultiplier.text = @"1";
-    _speedMultiplier.placeholder = @"Speed multiplier";
-    [self.view addSubview:_speedMultiplier];
-
-    [_speedMultiplier autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_playButton];
-    [_speedMultiplier autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:_playButton];
-    [_speedMultiplier autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:_playButton];
-    [_speedMultiplier autoSetDimension:ALDimensionHeight toSize:40];
-
     _stopButton = [BIStyles createButtonWithName:@"Stop"];
     [_stopButton addTarget:self action:@selector(stopAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_stopButton];
@@ -77,10 +68,30 @@
     [_stopButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:LEFT_RIGHT_INSET];
     [_stopButton autoSetDimension:ALDimensionHeight toSize:BUTTON_HEIGHT];
 
+    _speedMultiplierLabel = [[UILabel alloc] init];
+    [self.view addSubview:_speedMultiplierLabel];
+
+    [_speedMultiplierLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_playButton];
+    [_speedMultiplierLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:_playButton];
+    [_speedMultiplierLabel autoSetDimension:ALDimensionWidth toSize:250];
+    [_speedMultiplierLabel autoSetDimension:ALDimensionHeight toSize:40];
+
+    _speedMultiplierSlider = [[UISlider alloc] init];
+    _speedMultiplierSlider.minimumValue = 0.2;
+    _speedMultiplierSlider.maximumValue = 30;
+    _speedMultiplierSlider.value = 1;
+    [_speedMultiplierSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:_speedMultiplierSlider];
+    [_speedMultiplierSlider autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_speedMultiplierLabel];
+    [_speedMultiplierSlider autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:_playButton];
+    [_speedMultiplierSlider autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:_playButton];
+
+    _speedMultiplierLabel.text = [self getSpeedMultiplierString:_speedMultiplierSlider.value];
+
     _speedLabel = [UILabel new];
     _speedLabel.text = @"Speed: ";
     [self.view addSubview:_speedLabel];
-    [_speedLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_speedMultiplier withOffset:VERTICAL_SPACING];
+    [_speedLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:_speedMultiplierSlider withOffset:VERTICAL_SPACING];
     [_speedLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LEFT_RIGHT_INSET];
 
     _longitudeLabel = [UILabel new];
@@ -113,14 +124,19 @@
     _playButton.hidden = [_locationPlayback isTripPlaybackPlaying];
 }
 
-- (double)getSpeedMultiplier {
-    @try {
-        double speedMultiplier = [_speedMultiplier.text doubleValue];
-        return speedMultiplier == 0 ? 1 : speedMultiplier;
-    } @catch (NSException *e) {
+- (NSString *)getSpeedMultiplierString:(double)speedMultiplier {
+    return [NSString stringWithFormat:@"Speed multiplier: %.1fx", speedMultiplier];
+}
 
+- (void)sliderValueChanged:(UISlider *)sender {
+    if (_speedMultiplierSlider == sender) {
+        _speedMultiplierLabel.text = [self getSpeedMultiplierString:sender.value];
     }
-    return 1;
+}
+
+- (double)getSpeedMultiplier {
+    double speedMultiplier = _speedMultiplierSlider.value;
+    return speedMultiplier == 0 ? 1 : speedMultiplier;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
