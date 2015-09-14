@@ -22,7 +22,6 @@
 
 - (void)setupPresenterWithTrip:(BITrip *)trip {
     _previewMap = [[BITripPlaybackPreview alloc] init];
-
     [self disableUserInteractionWithSubviews];
     [self setupPresenterGestures];
 

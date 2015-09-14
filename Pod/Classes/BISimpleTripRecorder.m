@@ -56,13 +56,4 @@
     return [[BITrip alloc] initWithStartDate:_startDate endDate:tripEndDate entries:_tripEntries name:storageTripName];
 }
 
-//- (NSString *)createTripName {
-//    NSDate *currentDate = [NSDate new];
-//    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-//    dateFormatter.dateFormat = @"dd.MM.yy HH:mm:ss";
-//    NSString *currentDateString = [dateFormatter stringFromDate:currentDate];
-//    NSString *storageTripName = [NSString stringWithFormat:@"%@ %@", _tripName, currentDateString];
-//    return storageTripName;
-//}
-
 @end

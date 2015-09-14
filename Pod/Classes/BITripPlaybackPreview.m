@@ -12,6 +12,8 @@
     BILocationPlayback *_locationPlayback;
     MKPointAnnotation *_lastAnnotation;
     NSTimer *_everySecondTimer;
+    UITextView *_infoView;
+    NSDateFormatter *_dateFormatter;
 }
 
 - (instancetype)init {
@@ -24,6 +26,16 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tripStarted:) name:[_locationPlayback tripStartedNotification] object:_locationPlayback];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tripEnded:) name:[_locationPlayback tripEndedNotification] object:_locationPlayback];
         [self addSubview:_mapView];
+        _infoView = [[UITextView alloc] init];
+        [self addSubview:_infoView];
+        [_infoView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self];
+        [_infoView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self];
+        [_infoView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self];
+        [_infoView autoSetDimension:ALDimensionWidth toSize:160];
+        _infoView.textAlignment = NSTextAlignmentRight;
+        _infoView.backgroundColor = [UIColor clearColor];
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         [_mapView autoPinEdgesToSuperviewEdgesWithInsets:ALEdgeInsetsZero];
     }
     return self;
@@ -54,10 +66,20 @@
 }
 
 - (void)tripUpdated:(NSNotification *)notification {
-    if (_everySecondTimer == nil){
+    if (_everySecondTimer == nil) {
         [self startEverySecondTimer];
     }
     BITripEntry *entry = [_locationPlayback getTripEntryFromUserInfo:notification.userInfo];
+    NSDate *tripDate = [_locationPlayback getTripDate];
+    NSMutableString *info = [NSMutableString new];
+    if (tripDate) {
+        [info appendString:[NSString stringWithFormat:@"%@\n", [_dateFormatter stringFromDate:tripDate]]];
+    }
+    [info appendString:[NSString stringWithFormat:@"%.2f m/s\n", entry.speed]];
+    if (entry.acceleration) {
+        [info appendString:[NSString stringWithFormat:@"%.2f m/sec2", [entry.acceleration floatValue]]];
+    }
+    _infoView.text = info;
     [self onMapMarkTripEntry:entry];
 }
 
@@ -70,7 +92,7 @@
 }
 
 - (void)showLastAnnotation {
-    if (_lastAnnotation){
+    if (_lastAnnotation) {
         [_mapView showAnnotations:@[_lastAnnotation] animated:YES];
     }
 }
