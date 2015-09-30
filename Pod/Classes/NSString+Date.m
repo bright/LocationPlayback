@@ -9,6 +9,7 @@
     if (formatter == nil)
     {
         formatter = [[NSDateFormatter alloc] init];
+        [formatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
         [formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss.SSSSSS ZZZ"];
         formatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
     }
