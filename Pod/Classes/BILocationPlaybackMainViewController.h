@@ -13,11 +13,3 @@
 - (void)showTripsViewController:(NSArray *)trips allowDelete:(BOOL)allowDelete;
 
 @end
-
-@protocol BILocationPlaybackMainViewControllerProtocol <NSObject>
-
-- (void)userRequestedTripPlaybackOnTrip:(BITrip *)trip;
-
-- (void)userRequestedStopPlaybackOnTrip:(BITrip *)trip;
-
-@end

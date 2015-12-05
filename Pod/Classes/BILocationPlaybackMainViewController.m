@@ -1,15 +1,11 @@
-#import <CFNetwork/CFNetwork.h>
 #import "BILocationPlaybackMainViewController.h"
-#import "BITripsViewController.h"
+#import "BILocationPlaybackMainViewControllerProtocol.h"
+#import "BITripPlayback.h"
 #import "BILocationPlayback.h"
 #import "BILocationPlaybackConfiguration.h"
 #import "BITripRepository.h"
 #import "BITripMetadata.h"
-#import "BITripPlayback.h"
-#import "BILocationPlaybackPreviewViewController.h"
-#import "BILocationRecordingViewController.h"
 #import "BITrip.h"
-#import "BITripViewController.h"
 #import "BIStyles.h"
 #import "ALView+PureLayout.h"
 
