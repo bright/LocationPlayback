@@ -1,5 +1,7 @@
 #import "BITripPlayback.h"
 #import "BILocationPlaybackMainViewController.h"
+#import "BILocationPlaybackMainViewControllerProtocol.h"
+#import "BITripPlaybackProtocol.h"
 #import "BILocationPlayback.h"
 #import "BILocationPlaybackConfiguration.h"
 #import "BITrip.h"

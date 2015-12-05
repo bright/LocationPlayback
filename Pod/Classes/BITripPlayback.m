@@ -1,6 +1,7 @@
 #import "BITripPlayback.h"
 #import "BITrip.h"
 #import "BITripEntry.h"
+#import "BITripPlaybackProtocol.h"
 
 
 @implementation BITripPlayback {

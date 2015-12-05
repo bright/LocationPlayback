@@ -31,13 +31,3 @@
 
 - (NSDate *)tripDate;
 @end
-
-@protocol BITripPlaybackProtocol <NSObject>
-
-- (void)tripPlaybackEnded:(BITripPlayback *)playback;
-
-- (void)tripPlayback:(BITripPlayback *)playback playEntry:(BITripEntry *)entry;
-
-- (void)tripPlaybackStarted:(BITripPlayback *)playback;
-
-@end

@@ -1,12 +1,12 @@
 #import <Foundation/Foundation.h>
+#import "BILocationPlaybackMainViewControllerProtocol.h"
+#import "BITripPlaybackProtocol.h"
 
 @class BILocationPlaybackConfiguration;
 @class BITrip;
 @class BITripEntry;
-@protocol BILocationPlaybackMainViewControllerProtocol;
-@protocol BITripPlaybackProtocol;
 
-@interface BILocationPlayback : NSObject <BILocationPlaybackMainViewControllerProtocol, BITripPlaybackProtocol>
+@interface BILocationPlayback : NSObject <BILocationPlaybackMainViewControllerProtocol,BITripPlaybackProtocol>
 
 - (NSString *)tripStartedNotification;
 
