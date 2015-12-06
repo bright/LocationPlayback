@@ -21,7 +21,6 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		C5892327703315A42AF793F3 /* BITripPlaybackTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C58923B5D1F36911A228A385 /* BITripPlaybackTests.m */; };
 		C58928ADCEFD59B7946562E4 /* BIPlaybackPlayedEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = C5892CCA42AC7CBE3515DF4A /* BIPlaybackPlayedEntry.m */; };
 		C58929EA0DEC7A8DAD5B0737 /* BIFakePlaybackProtocolImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = C5892F3555137A758BB9F1D7 /* BIFakePlaybackProtocolImplementation.m */; };
@@ -64,7 +63,6 @@
 		74D6E5077D3AEB4767337CBF /* Pods_LocationPlayback_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocationPlayback_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7951B7C44D033C0E5CB94785 /* Pods_LocationPlayback_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocationPlayback_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		810690021032F91C2C932042 /* Pods-LocationPlayback_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationPlayback_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocationPlayback_Tests/Pods-LocationPlayback_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BD7D6905DEC05C48C79455FE /* Pods-LocationPlayback_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocationPlayback_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocationPlayback_Example/Pods-LocationPlayback_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C589222A70DD755DC2BA7F9F /* BIPlaybackPlayedEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BIPlaybackPlayedEntry.h; sourceTree = "<group>"; };
 		C589234C6E3109B363129401 /* BITripSerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BITripSerializerTests.m; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 			children = (
 				6003F59C195388D20070C39A /* BIAppDelegate.h */,
 				6003F59D195388D20070C39A /* BIAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* BIViewController.h */,
 				6003F5A6195388D20070C39A /* BIViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
@@ -300,7 +297,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -540,7 +536,6 @@
 			baseConfigurationReference = BD7D6905DEC05C48C79455FE /* Pods-LocationPlayback_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LocationPlayback/LocationPlayback-Prefix.pch";
 				INFOPLIST_FILE = "LocationPlayback/LocationPlayback-Info.plist";
@@ -548,6 +543,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "pl.brightinventions.pl.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -557,7 +553,6 @@
 			baseConfigurationReference = 3AF65AB6556F8719245C73D6 /* Pods-LocationPlayback_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LocationPlayback/LocationPlayback-Prefix.pch";
 				INFOPLIST_FILE = "LocationPlayback/LocationPlayback-Info.plist";
@@ -565,6 +560,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "pl.brightinventions.pl.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
