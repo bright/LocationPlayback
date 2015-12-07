@@ -1,10 +1,7 @@
+#import "BITripRecorder.h"
 #import "BISimpleTripRecorder.h"
 #import "BITrip.h"
 #import "BITripEntry.h"
-#import "BITripRecorder.h"
-
-@import CoreLocation;
-
 
 @implementation BISimpleTripRecorder {
     CLLocationManager *_locationManager;

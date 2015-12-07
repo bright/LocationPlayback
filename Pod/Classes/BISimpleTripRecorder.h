@@ -1,11 +1,11 @@
 #import <Foundation/Foundation.h>
+#import <BITripRecorder.h>
 
 @import CoreLocation;
 @protocol CLLocationManagerDelegate;
 @class BITrip;
 @protocol BITripRecorderProtocol;
 @class BITripEntry;
-@protocol BITripRecorder;
 
 @interface BISimpleTripRecorder : NSObject <CLLocationManagerDelegate, BITripRecorder>
 
