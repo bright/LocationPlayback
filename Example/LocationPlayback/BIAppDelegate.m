@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 Daniel Makurat. All rights reserved.
 //
 
-#import <LocationPlayback/BICloudRepositoryBuilder.h>
+#import <LocationPlayback/BITripPlayback.h>
+#import <LocationPlayback/BILocationPlaybackMainViewController.h>
 #import <LocationPlayback/BILocationPlayback.h>
 #import <LocationPlayback/BILocationPlaybackConfiguration.h>
+#import <LocationPlayback/BIRegistryWithCloudRepository.h>
 #import "BIAppDelegate.h"
 #import "BIViewController.h"
 
@@ -17,9 +19,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[BIViewController new]];
-    BICloudRepositoryBuilder *repositoryBuilder = [[BICloudRepositoryBuilder alloc] initWithApplicationId:@"zwWNbqiQCuKo3hIKfnHPzIJfWgs2OjmyQSWijHlf"
-                                                                                                clientKey:@"yp7XjY1WvJnPRJNcg9ukAGODnqZUCeshLVCJvSQs"];
-    [[[BILocationPlayback instance] getConfiguration] setTripRepositoriesBuilder:repositoryBuilder];
+    BIRegistryWithCloudRepository * repositoryBuilder = [[BIRegistryWithCloudRepository alloc] initWithApplicationId:@"zwWNbqiQCuKo3hIKfnHPzIJfWgs2OjmyQSWijHlf" clientKey:@"yp7XjY1WvJnPRJNcg9ukAGODnqZUCeshLVCJvSQs"];
+    [[[BILocationPlayback instance] getConfiguration] setRegistry:repositoryBuilder];
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -17,16 +17,20 @@
     return [self initWithLocation:location acceleration:nil];
 }
 
-- (instancetype)initWithLocation: (CLLocation *) location acceleration:(NSNumber *) acceleration {
+- (instancetype)initWithLocation: (CLLocation *) location timestamp:(NSDate *)timestamp acceleration:(NSNumber *) acceleration {
     self = [super init];
     if (self) {
         self.coordinate2D = location.coordinate;
         self.speed = (CGFloat) location.speed;
-        self.timestamp = [NSDate date];
+        self.timestamp = timestamp;
         self.locationTimestamp = location.timestamp;
         self.acceleration = acceleration;
     }
     return self;
+}
+
+- (instancetype)initWithLocation: (CLLocation *) location acceleration:(NSNumber *) acceleration {
+    return [self initWithLocation:location timestamp:[NSDate date] acceleration:acceleration];
 }
 
 - (NSDate *)getTimestamp {

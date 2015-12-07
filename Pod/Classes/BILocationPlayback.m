@@ -33,6 +33,13 @@
     return _tripPlayback != nil;
 }
 
+-(NSDate *) getTripDate {
+    if ([self isTripPlaybackPlaying]){
+        return [_tripPlayback tripDate];
+    }
+    return nil;
+}
+
 -(BITrip *) getPlayedTrip {
     return _tripPlayback != nil ? [_tripPlayback getTrip] : nil;
 }
@@ -45,7 +52,6 @@
     return self;
 }
 
-
 + (BILocationPlayback *)instance {
     static BILocationPlayback *_instance = nil;
 
@@ -54,7 +60,6 @@
             _instance = [[self alloc] init];
         }
     }
-
     return _instance;
 }
 
@@ -95,8 +100,9 @@
     return _configuration;
 }
 
-- (void)userRequestedTripPlaybackOnTrip:(BITrip *)trip {
+- (void)userRequestedTripPlaybackOnTrip:(BITrip *)trip withSpeedMultiplier:(double)multiplier {
     _tripPlayback = [[BITripPlayback alloc] initWithTrip:trip];
+    [_tripPlayback setSpeedMultiplier:multiplier];
     _tripPlayback.delegate = self;
     [_tripPlayback play];
 }

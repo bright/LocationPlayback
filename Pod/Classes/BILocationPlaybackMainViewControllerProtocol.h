@@ -4,7 +4,7 @@
 
 @protocol BILocationPlaybackMainViewControllerProtocol <NSObject>
 
-- (void)userRequestedTripPlaybackOnTrip:(BITrip *)trip;
+- (void)userRequestedTripPlaybackOnTrip:(BITrip *)trip withSpeedMultiplier:(double)multiplier;
 
 - (void)userRequestedStopPlaybackOnTrip:(BITrip *)trip;
 

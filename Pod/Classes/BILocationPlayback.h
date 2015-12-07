@@ -16,6 +16,11 @@
 
 -(BOOL) isTripPlaybackPlaying;
 
+/**
+* @return returns real trip date if playback is playing
+*/
+- (NSDate *)getTripDate;
+
 - (BITrip *)getPlayedTrip;
 
 + (BILocationPlayback *)instance;

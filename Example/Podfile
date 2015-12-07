@@ -2,15 +2,16 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 target 'LocationPlayback_Example', :exclusive => true do
-  pod "LocationPlayback", :path => "../"
+  pod "LocationPlayback", :path => "../LocationPlayback.podspec"
   
 end
 
 target 'LocationPlayback_Tests', :exclusive => true do
-  pod "LocationPlayback", :path => "../"
+  pod "LocationPlayback", :path => "../LocationPlayback.podspec"
 
-  pod 'Specta'
-  pod 'Expecta'
+  pod 'Specta', '1.0.3'
+  pod 'Expecta', '1.0.2'
   pod 'FBSnapshotTestCase'
   pod 'Expecta+Snapshots'
+  pod 'OCMock', '3.1.5'
 end

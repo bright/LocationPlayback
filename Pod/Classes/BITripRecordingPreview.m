@@ -1,5 +1,6 @@
-#import "BITripRecordingPreview.h"
 #import "BITripRecorder.h"
+#import "BITripRecordingPreview.h"
+#import "BISimpleTripRecorder.h"
 #import "BITripEntry.h"
 #import "BITrip.h"
 #import "ALView+PureLayout.h"
@@ -7,15 +8,14 @@
 @import MapKit;
 
 @implementation BITripRecordingPreview {
-    __weak BITripRecorder* _tripRecorder;
+    __weak id<BITripRecorder> _tripRecorder;
     MKMapView *_mapView;
 }
 
-- (instancetype)initWithTripRecorder:(BITripRecorder *) tripRecorder {
+- (instancetype)initWithTripRecorder:(id<BITripRecorder>)tripRecorder{
     self = [super init];
     if (self) {
         _mapView = [MKMapView new];
-
         _tripRecorder = tripRecorder;
         _tripRecorder.delegate = self;
         [self addSubview: _mapView];
@@ -25,17 +25,17 @@
     return self;
 }
 
-- (void)tripRecorder:(BITripRecorder *)recorder didRecordTripEntry:(BITripEntry *)entry {
+- (void)tripRecorder:(id<BITripRecorder>)recorder didRecordTripEntry:(BITripEntry *)entry {
     MKPointAnnotation *myAnnotation = [[MKPointAnnotation alloc] init];
     myAnnotation.coordinate = [entry getCoordinate];
     [_mapView showAnnotations:@[myAnnotation] animated:YES];
 }
 
-- (void)tripRecorderDidStartRecording:(BITripRecorder *)recorder {
+- (void)tripRecorderDidStartRecording:(id<BITripRecorder>)recorder {
 
 }
 
-- (void)tripRecorder:(BITripRecorder *)recorder didStopRecordingTrip:(BITrip *)recorderTrip {
+- (void)tripRecorder:(id<BITripRecorder>)recorder didStopRecordingTrip:(BITrip *)recorderTrip {
 
 }
 

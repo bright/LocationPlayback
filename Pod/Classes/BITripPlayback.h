@@ -17,6 +17,18 @@
 
 - (void)play;
 
--(BITrip *) getTrip;
+- (BITrip *)getTrip;
+
+- (void)setTolerance:(NSTimeInterval)tolerance;
+
+- (void)setSpeedMultiplier:(double)multiplier;
+
+- (double)getSpeedMultiplier;
+
+- (NSDate *)getPlaybackStartedDate;
+
+- (NSTimeInterval)getTolerance;
+
+- (NSDate *)tripDate;
 
 @end

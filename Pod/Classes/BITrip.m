@@ -2,6 +2,7 @@
 #import "BITripEntry.h"
 #import "BITripMetadata.h"
 #import "NSString+Date.h"
+#import "BISimpleTripRecorder.h"
 
 @implementation BITrip {
     NSArray *_entries;

@@ -1,15 +1,15 @@
 #import <Foundation/Foundation.h>
 
 @protocol BITripRepository;
-@protocol BITripRepositoryBuilder;
+@protocol BILocationPlaybackRegistry;
 
 
 @interface BILocationPlaybackConfiguration : NSObject
 
 @property (nonatomic) CGSize previewSize;
 
-- (void)setTripRepositoriesBuilder:(id <BITripRepositoryBuilder>)repositoryBuilder;
+- (void)setRegistry:(id <BILocationPlaybackRegistry>)registry;
 
-- (id <BITripRepository>)createStorage;
+- (id <BILocationPlaybackRegistry>)getRegistry;
 
 @end

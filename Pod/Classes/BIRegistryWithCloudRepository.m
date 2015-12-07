@@ -1,10 +1,12 @@
-#import "BICloudRepositoryBuilder.h"
+#import "BIRegistryWithCloudRepository.h"
 #import "PFAnalytics.h"
 #import "Parse.h"
 #import "BIParseTripRepository.h"
+#import "BITripRecorder.h"
+#import "BISimpleTripRecorder.h"
 
 
-@implementation BICloudRepositoryBuilder {}
+@implementation BIRegistryWithCloudRepository {}
 
 - (instancetype)initWithApplicationId:(NSString *)applicationId clientKey:(NSString *)clientKey {
     self = [super init];
@@ -20,5 +22,8 @@
     return [[BIParseTripRepository alloc] init];
 }
 
+- (id <BITripRecorder>)newRecorderWithTripName:(NSString *)tripName {
+    return [[BISimpleTripRecorder alloc] initWithTripName:tripName];
+}
 
 @end

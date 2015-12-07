@@ -1,12 +1,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "BITripRecorder.h"
+#import "BISimpleTripRecorder.h"
 
 
 @interface BITripRecordingPreview : UIView <BITripRecorderProtocol>
 
 
-- (instancetype)initWithTripRecorder:(BITripRecorder *)tripRecorder;
+- (instancetype)initWithTripRecorder:(id<BITripRecorder>)tripRecorder;
 
 - (void)clearAnnotations;
 @end

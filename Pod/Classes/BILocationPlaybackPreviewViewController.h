@@ -14,7 +14,7 @@
 
 @protocol BILocationPlaybackPreviewViewControllerProtocol <NSObject>
 
-- (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStartRequested:(BITrip *)requested;
+- (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStartRequested:(BITrip *)requested withSpeedMultiplier:(double)multiplier;
 
 - (void)playbackPreviewVC:(BILocationPlaybackPreviewViewController *)controller tripPlaybackStopRequested:(BITrip *)requested;
 

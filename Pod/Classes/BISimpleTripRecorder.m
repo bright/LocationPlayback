@@ -1,11 +1,9 @@
 #import "BITripRecorder.h"
+#import "BISimpleTripRecorder.h"
 #import "BITrip.h"
 #import "BITripEntry.h"
 
-@import CoreLocation;
-
-
-@implementation BITripRecorder {
+@implementation BISimpleTripRecorder {
     CLLocationManager *_locationManager;
     NSMutableArray *_tripEntries;
     NSDate *_startDate;
@@ -54,14 +52,5 @@
     NSDate *tripEndDate = [NSDate new];
     return [[BITrip alloc] initWithStartDate:_startDate endDate:tripEndDate entries:_tripEntries name:storageTripName];
 }
-
-//- (NSString *)createTripName {
-//    NSDate *currentDate = [NSDate new];
-//    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-//    dateFormatter.dateFormat = @"dd.MM.yy HH:mm:ss";
-//    NSString *currentDateString = [dateFormatter stringFromDate:currentDate];
-//    NSString *storageTripName = [NSString stringWithFormat:@"%@ %@", _tripName, currentDateString];
-//    return storageTripName;
-//}
 
 @end

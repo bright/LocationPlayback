@@ -1,37 +1,40 @@
 PODS:
   - Bolts/Tasks (1.5.0)
-  - Expecta (1.0.0)
+  - Expecta (1.0.2)
   - Expecta+Snapshots (1.3.4):
     - Expecta (~> 1.0)
     - FBSnapshotTestCase (~> 1.8)
   - FBSnapshotTestCase (1.8.1)
-  - LocationPlayback (0.1.1):
-    - Parse (~> 1.7.4)
+  - LocationPlayback (0.3.6):
+    - Parse (= 1.8.5)
     - PureLayout (~> 2.0.6)
-  - Parse (1.7.5.3):
-    - Bolts/Tasks (>= 1.2.0)
+  - OCMock (3.1.5)
+  - Parse (1.8.5):
+    - Bolts/Tasks (>= 1.2.2)
   - PureLayout (2.0.6)
-  - Specta (1.0.2)
+  - Specta (1.0.3)
 
 DEPENDENCIES:
-  - Expecta
+  - Expecta (= 1.0.2)
   - Expecta+Snapshots
   - FBSnapshotTestCase
-  - LocationPlayback (from `../`)
-  - Specta
+  - LocationPlayback (from `../LocationPlayback.podspec`)
+  - OCMock (= 3.1.5)
+  - Specta (= 1.0.3)
 
 EXTERNAL SOURCES:
   LocationPlayback:
-    :path: "../"
+    :path: "../LocationPlayback.podspec"
 
 SPEC CHECKSUMS:
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
-  Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
+  Expecta: 54e8a3530add08f4f0208c111355eda7cde74a53
   Expecta+Snapshots: ca15bfb57e7a0f78f86c7699c2c54ffacfa4ad2a
   FBSnapshotTestCase: 3dc3899168747a0319c5278f5b3445c13a6532dd
-  LocationPlayback: 328c73b8a83180c1fefdd3096504c4759956765a
-  Parse: 373adbb1ad2e34d383542c3b28f678c49ebe4881
+  LocationPlayback: 3fa70321b00192c48f71fe1be4af7fc34975b079
+  OCMock: 4c2925291f80407c3738dd1db14d21d0cc278864
+  Parse: 17ad8e0677ed682f7f00503860fcda0f4eb74168
   PureLayout: f25f0bb904d5ccfe6e31da3cb869185259f02e0d
-  Specta: 9cec98310dca411f7c7ffd6943552b501622abfe
+  Specta: cf3e4188cf35375c3ee2cd03f8db8f1f4ef98234
 
 COCOAPODS: 0.39.0
