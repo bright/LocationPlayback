@@ -52,7 +52,6 @@
     return self;
 }
 
-
 + (BILocationPlayback *)instance {
     static BILocationPlayback *_instance = nil;
 
@@ -61,7 +60,6 @@
             _instance = [[self alloc] init];
         }
     }
-
     return _instance;
 }
 
