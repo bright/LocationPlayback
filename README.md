@@ -45,7 +45,13 @@ BILocationPlaybackTripEnded_notification - `BITrip *` object is propageted with 
 
 ## Running 'Example' project
 
-First make sure you have ruby and bundler gem installed. Then go to `Example` directory. In Example directory please execute `bundle install` and if success please execute `pod install`. Now you can open project file using that command `open Example/LocationPlayback.xcworkspace`.
+First make sure you have ruby and bundler gem installed. Then starting from root dir:
+```
+cd Example
+bundle install
+pod install
+open LocationPlayback.xcworkspace
+```
 
 ## Storing trips
 
